@@ -6,6 +6,11 @@ Built for **Google #BuildHybridAI 2026** with Firebase AI Logic.
 
 **Live web app:** [carcare-ai-field-assistant.web.app](https://carcare-ai-field-assistant.web.app)
 
+<p align="center">
+  <img src="demo/evidence/android-home.png" alt="Android home screen with Firebase AI Logic ready" width="300" />
+  <img src="demo/evidence/android-preview.png" alt="Android synthetic vehicle note and privacy preview" width="300" />
+</p>
+
 ## Why hybrid AI belongs in the field
 
 Vehicle notes are often captured in a noisy garage, at the roadside, or somewhere with unreliable connectivity. A short, privacy-sensitive first pass is well suited to Gemini Nano on the device. Firebase AI Logic can then fall back to a cloud Gemini model when the device model is unavailable or the request needs more capacity.

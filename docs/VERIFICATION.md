@@ -1,6 +1,6 @@
 # Verification record
 
-Date: **2026-11-17**
+Date: **2026-11-18**
 Environment: Windows, Node.js 24.12.0, npm 11.6.2, JDK 17, Android SDK 36.
 
 ## Automated results
@@ -44,6 +44,18 @@ The production build was then deployed and checked at [carcare-ai-field-assistan
 - The production UI now maps that provider response to a short, localised billing-credit message instead of exposing the provider endpoint and raw error details.
 - After an owner-authorised manual Prepay purchase with auto-reload disabled, a fresh production request rendered a complete inspection brief. The UI showed inference source `IN CLOUD`, model `gemini-3.5-flash-lite`, and 85% confidence for the synthetic braking-vibration sample.
 
+## Android emulator verification
+
+The debug APK was installed and launched on the local Android 16 / API 36.1 emulator:
+
+- The native Compose UI rendered in English with `Firebase AI Logic · ready`.
+- The synthetic braking-vibration sample populated the vehicle, mileage, and symptom fields.
+- The privacy preview rendered the exact redacted text and the decision-support disclaimer.
+- A live request was intentionally not counted as successful: Firebase rejected the emulator's unregistered debug App Check token with `Firebase App Check token is invalid`.
+- App Check enforcement was left enabled. Completing a live emulator request requires explicitly allow-listing that emulator-only debug token in Firebase; production protection was not weakened to manufacture a passing result.
+
+Clean screenshots of the verified Android states are stored in `demo/evidence/`.
+
 ## Connected Firebase evidence
 
 The dedicated contest project is `carcare-ai-field-assistant` (project number `1018543144766`) on the Spark plan. It is isolated from the commercial `car-care-sverige` project.
@@ -64,8 +76,9 @@ Client configuration, App Check debug tokens, Geoapify keys, signing keys, and p
 ## Remaining release evidence
 
 1. Capture an actual `ON_DEVICE` result on supported Chrome and Android hardware.
-2. Sign the Android release with the project owner's release key.
-3. Record the final live demo, upload it to YouTube, and submit through the entrant's Devpost account.
+2. Register the current emulator-only App Check debug token if a live cloud Android recording is required.
+3. Sign the Android release with the project owner's release key.
+4. Record the final live demo, upload it to YouTube, and submit through the entrant's Devpost account.
 
 These are release gates, not simulated evidence. See `docs/CONTEST_COMPLIANCE.md` for the exact checklist.
 
