@@ -52,6 +52,7 @@ The dedicated contest project is `carcare-ai-field-assistant` (project number `1
 - Web provider: reCAPTCHA Enterprise, restricted to the two Firebase Hosting domains plus `localhost`.
 - Android provider: Play Integrity with the local debug signing certificate registered.
 - Hosting: deployed to [carcare-ai-field-assistant.web.app](https://carcare-ai-field-assistant.web.app).
+- Public source: published to [MudherAhmad/carcare-ai-field-assistant](https://github.com/MudherAhmad/carcare-ai-field-assistant); the published `main` branch passed the clean-room safety scan.
 
 Client configuration, App Check debug tokens, Geoapify keys, signing keys, and personal account credentials remain ignored and are not committed.
 
@@ -59,9 +60,8 @@ Client configuration, App Check debug tokens, Geoapify keys, signing keys, and p
 
 1. Capture an actual `ON_DEVICE` result on supported Chrome and Android hardware.
 2. Resolve the Gemini Developer API billing/free-tier gate and capture the corrected `IN_CLOUD` label.
-3. Publish the source remote and verify the published commit.
-4. Sign the Android release with the project owner's release key.
-5. Record the final live demo, upload it to YouTube, and submit through the entrant's Devpost account.
+3. Sign the Android release with the project owner's release key.
+4. Record the final live demo, upload it to YouTube, and submit through the entrant's Devpost account.
 
 These are release gates, not simulated evidence. See `docs/CONTEST_COMPLIANCE.md` for the exact checklist.
 
