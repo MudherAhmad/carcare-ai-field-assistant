@@ -11,7 +11,7 @@ Official deadline: **November 30, 2026 at 2:00 PM Pacific Time** (23:00 Europe/S
 | Platform | Chrome Web and native Android | Implemented |
 | Working demo | Synthetic, labelled UI mode plus live configuration path | Deployed at `https://carcare-ai-field-assistant.web.app`; live `IN_CLOUD` result verified through Firebase AI Logic |
 | Public source | Clean standalone MIT repository | Published at `https://github.com/MudherAhmad/carcare-ai-field-assistant` |
-| Video | English script, shot list, captions plan, max 3 minutes | Prepared; final live recording and YouTube upload pending project owner |
+| Video | English narration, verified Web and Android evidence, burned English captions, max 3 minutes | Final 2:48 local render verified; public YouTube upload pending project owner |
 | Written submission | Devpost copy in `demo/DEVPOST_SUBMISSION.md` | Prepared |
 
 - Entrant: **Mudher Ahmad**
@@ -28,6 +28,6 @@ Official deadline: **November 30, 2026 at 2:00 PM Pacific Time** (23:00 Europe/S
 - [x] Add a positive Gemini API Prepay balance and verify the corrected `IN_CLOUD` label.
 - [x] Deploy Firebase Hosting and record its public URL.
 - [x] Publish the source repository and run the clean-room safety scan on the published commit.
-- [ ] Record a live English demo of no more than 3 minutes.
+- [x] Produce and verify an English demo of no more than 3 minutes.
 - [ ] Upload the video publicly to YouTube and add English subtitles.
 - [ ] Complete Devpost team membership and submission fields before the deadline.
