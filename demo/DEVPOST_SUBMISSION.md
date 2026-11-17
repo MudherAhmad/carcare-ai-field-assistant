@@ -28,6 +28,7 @@ Hybrid inference is not just a network fallback. On-device availability, model d
 - Visible, evidence-based inference routing.
 - A privacy boundary that shows what may reach the model.
 - Safety constraints that prevent the UI from presenting an AI guess as a confirmed diagnosis.
+- A verified live `IN_CLOUD` inspection brief from the deployed Firebase Hosting site.
 - A clean public repository with synthetic data and automated secret checks.
 
 ## What we learned
