@@ -2,7 +2,6 @@ import type { SchemaRequest } from "firebase/ai";
 
 export const reportJsonSchema: SchemaRequest = {
   type: "object",
-  additionalProperties: false,
   required: [
     "schemaVersion",
     "language",
@@ -26,7 +25,6 @@ export const reportJsonSchema: SchemaRequest = {
       maxItems: 8,
       items: {
         type: "object",
-        additionalProperties: false,
         required: ["system", "symptom", "severity"],
         properties: {
           system: { type: "string", maxLength: 80 },
@@ -40,7 +38,6 @@ export const reportJsonSchema: SchemaRequest = {
       maxItems: 8,
       items: {
         type: "object",
-        additionalProperties: false,
         required: ["title", "reason", "safetyLevel"],
         properties: {
           title: { type: "string", maxLength: 160 },
@@ -54,7 +51,6 @@ export const reportJsonSchema: SchemaRequest = {
       maxItems: 6,
       items: {
         type: "object",
-        additionalProperties: false,
         required: ["name", "reason", "priority"],
         properties: {
           name: { type: "string", maxLength: 140 },

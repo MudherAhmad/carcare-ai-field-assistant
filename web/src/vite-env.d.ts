@@ -19,4 +19,7 @@ interface ImportMeta {
 
 interface Window {
   FIREBASE_APPCHECK_DEBUG_TOKEN?: boolean | string;
+  LanguageModel?: {
+    availability(options?: unknown): Promise<"unavailable" | "downloadable" | "downloading" | "available">;
+  };
 }

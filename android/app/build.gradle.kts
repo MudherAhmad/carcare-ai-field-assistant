@@ -23,7 +23,7 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "ai.carcare.fieldassistant"
+        applicationId = "org.carcare.fieldassistant"
         minSdk = 26
         targetSdk = 36
         versionCode = 1

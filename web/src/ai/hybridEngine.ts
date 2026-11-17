@@ -8,6 +8,7 @@ import {
   getGenerativeModel,
   GoogleAIBackend,
   InferenceMode,
+  InferenceSource,
   type GenerativeModel,
 } from "firebase/ai";
 import { getSyntheticReport } from "./demoReports";
@@ -32,6 +33,16 @@ export interface HybridReportEngine {
 
 function envValue(value: string | undefined): string {
   return value?.trim() ?? "";
+}
+
+export function normalizeInferenceSource(source: unknown): "ON_DEVICE" | "IN_CLOUD" | "UNKNOWN" {
+  if (source === InferenceSource.ON_DEVICE || source === "ON_DEVICE") return "ON_DEVICE";
+  if (source === InferenceSource.IN_CLOUD || source === "IN_CLOUD") return "IN_CLOUD";
+  return "UNKNOWN";
+}
+
+export function isOnDeviceAvailabilityReady(availability: unknown): boolean {
+  return availability === "available";
 }
 
 export class FirebaseHybridReportEngine implements HybridReportEngine {
@@ -109,13 +120,30 @@ export class FirebaseHybridReportEngine implements HybridReportEngine {
     }
 
     const model = this.getModel();
+    const languageModel = window.LanguageModel;
+    if (!languageModel) {
+      this.prepared = true;
+      onProgress({ state: "cloud_only", progress: 0 });
+      return;
+    }
     onProgress({ state: "downloading", progress: 0 });
     try {
       await model.initializeDeviceModel((progress) => {
         onProgress({ state: "downloading", progress });
       });
       this.prepared = true;
-      onProgress({ state: "ready", progress: 1 });
+      const availability = await languageModel.availability({
+        expectedInputs: [
+          { type: "text", languages: ["en"] },
+          { type: "image" },
+        ],
+        expectedOutputs: [{ type: "text", languages: ["en"] }],
+      });
+      onProgress(
+        isOnDeviceAvailabilityReady(availability)
+          ? { state: "ready", progress: 1 }
+          : { state: "cloud_only", progress: 0 },
+      );
     } catch {
       this.prepared = true;
       onProgress({ state: "cloud_only", progress: 0 });
@@ -137,10 +165,10 @@ export class FirebaseHybridReportEngine implements HybridReportEngine {
     }
     const model = this.getModel();
     const result = await model.generateContent(buildInspectionPrompt(input, redactedNotes));
-    const source = String(result.response.inferenceSource ?? "UNKNOWN");
+    const source = normalizeInferenceSource(result.response.inferenceSource);
     return {
       report: parseInspectionReport(result.response.text()),
-      source: source === "ON_DEVICE" || source === "IN_CLOUD" ? source : "UNKNOWN",
+      source,
       modelName: source === "ON_DEVICE" ? "Gemini Nano" : this.cloudModel,
     };
   }

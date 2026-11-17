@@ -8,8 +8,8 @@ Environment: Windows, Node.js 24.12.0, npm 11.6.2, JDK 17, Android SDK 36.
 | Surface | Check | Result |
 | --- | --- | --- |
 | Web | TypeScript project check | Passed |
-| Web | Vitest redaction, schema, and Geoapify tests | **7 passed** |
-| Web | V8 coverage | 52.7% statements; 60.41% branches; 58.59% lines |
+| Web | Vitest routing, redaction, schema, and Geoapify tests | **10 passed** |
+| Web | V8 coverage | 53.75% statements; 63.33% branches; 58.69% lines |
 | Web | Vite production build | Passed |
 | Web | `npm audit --omit=dev` | **0 known runtime vulnerabilities** |
 | Android | JUnit redaction, prompt, and schema tests | **5 passed** |
@@ -31,15 +31,37 @@ The labelled synthetic mode was exercised end to end in the local production UI:
 - Browser console: no warnings or errors during the checked flows.
 - Synthetic results remained visibly labelled `SYNTHETIC DEMO`; they are not presented as live AI evidence.
 
-## Evidence that still requires project-owner access
+The production build was then deployed and checked at [carcare-ai-field-assistant.web.app](https://carcare-ai-field-assistant.web.app):
 
-The repository deliberately contains no Firebase project, App Check token, Geoapify key, signing key, personal account, or submission identity. The following checks therefore remain open:
+- Firebase Hosting returned HTTP 200 with the configured `nosniff`, referrer, and permissions-policy headers.
+- reCAPTCHA Enterprise App Check accepted the deployed origin.
+- A live Firebase AI Logic request reached `gemini-3.5-flash-lite` and rendered a complete structured inspection brief.
+- The first live request exposed two integration defects that were fixed and regression-tested: Firebase's response schema rejects `additionalProperties`, and the Web SDK returns lowercase `on_device` / `in_cloud` inference-source values.
+- The browser now checks Chrome's `LanguageModel.availability()` before claiming that Gemini Nano is ready. The verification browser correctly reports `Cloud fallback available; on-device model unavailable`.
+- A later cloud request returned `403: The Gemini API free tier is not available for this project`. Billing was deliberately not enabled without the project owner's separate financial approval, so a post-fix screenshot showing the `IN_CLOUD` label remains open.
 
-1. Configure a dedicated public-contest Firebase project and enable Firebase AI Logic.
-2. Enforce App Check for the deployed Web and Android apps.
-3. Capture an actual `ON_DEVICE` result on supported Chrome and Android hardware.
-4. Capture an actual `IN_CLOUD` fallback result through Firebase AI Logic.
-5. Deploy Firebase Hosting, publish the source remote, record the live demo, upload it to YouTube, and submit through the entrant's Devpost account.
+## Connected Firebase evidence
+
+The dedicated contest project is `carcare-ai-field-assistant` (project number `1018543144766`) on the Spark plan. It is isolated from the commercial `car-care-sverige` project.
+
+- Web app: `CarCare Field Web`.
+- Android app: `CarCare Field Android`, application ID `org.carcare.fieldassistant`.
+- Gemini Developer API: enabled through Firebase AI Logic.
+- AI monitoring: enabled.
+- Firebase AI Logic App Check: Basic protection enforced.
+- Web provider: reCAPTCHA Enterprise, restricted to the two Firebase Hosting domains plus `localhost`.
+- Android provider: Play Integrity with the local debug signing certificate registered.
+- Hosting: deployed to [carcare-ai-field-assistant.web.app](https://carcare-ai-field-assistant.web.app).
+
+Client configuration, App Check debug tokens, Geoapify keys, signing keys, and personal account credentials remain ignored and are not committed.
+
+## Remaining release evidence
+
+1. Capture an actual `ON_DEVICE` result on supported Chrome and Android hardware.
+2. Resolve the Gemini Developer API billing/free-tier gate and capture the corrected `IN_CLOUD` label.
+3. Publish the source remote and verify the published commit.
+4. Sign the Android release with the project owner's release key.
+5. Record the final live demo, upload it to YouTube, and submit through the entrant's Devpost account.
 
 These are release gates, not simulated evidence. See `docs/CONTEST_COMPLIANCE.md` for the exact checklist.
 
@@ -47,7 +69,7 @@ These are release gates, not simulated evidence. See `docs/CONTEST_COMPLIANCE.md
 
 Generated artifacts are ignored by Git and must be rebuilt from the public source:
 
-- Debug APK: 18,499,396 bytes; SHA-256 `0040E7D620C37A0F382872BEB55759C3C0ACFA6EE03BDB41D7C658E4D069C34A`.
-- Unsigned release APK: 3,223,655 bytes; SHA-256 `ABFAE13170B8C26C5C8C11D2BD07DE65216CEF4F945EA797DD5F11A55C6FA3E7`.
+- Debug APK: 17,682,008 bytes; SHA-256 `44A8E32ED3C1B849D7C609CA2D649CB2A281FE22B7A3C10DD42BAD3898BCFF0E`.
+- Unsigned release APK: 3,455,803 bytes; SHA-256 `0480B32D3424504802BC75DD122987E51F6633F667B8B82992DD60E23B115496`.
 
 The release output is intentionally unsigned because no signing key belongs in the repository. The project owner must sign it and record the final signed hash. Rebuilds after source or toolchain changes are expected to differ.

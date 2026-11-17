@@ -4,6 +4,8 @@ CarCare AI Field Assistant turns a driver's or technician's free-form vehicle no
 
 Built for **Google #BuildHybridAI 2026** with Firebase AI Logic.
 
+**Live web app:** [carcare-ai-field-assistant.web.app](https://carcare-ai-field-assistant.web.app)
+
 ## Why hybrid AI belongs in the field
 
 Vehicle notes are often captured in a noisy garage, at the roadside, or somewhere with unreliable connectivity. A short, privacy-sensitive first pass is well suited to Gemini Nano on the device. Firebase AI Logic can then fall back to a cloud Gemini model when the device model is unavailable or the request needs more capacity.
@@ -47,7 +49,7 @@ The UI can be reviewed without Firebase by setting `VITE_SYNTHETIC_DEMO=true`. T
 
 Requirements: JDK 17, Android SDK 36, and a recent Android Studio.
 
-1. Register the Android package `ai.carcare.fieldassistant` in the same Firebase project.
+1. Register the Android application ID `org.carcare.fieldassistant` in the same Firebase project. The Kotlin namespace remains `ai.carcare.fieldassistant`.
 2. Download its `google-services.json` to `android/app/google-services.json`.
 3. Enable Firebase AI Logic and App Check. Use the debug provider only for local development.
 4. Build:

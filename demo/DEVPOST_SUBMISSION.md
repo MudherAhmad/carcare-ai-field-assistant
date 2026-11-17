@@ -1,5 +1,11 @@
 # CarCare AI Field Assistant
 
+- Entrant: **Mudher Ahmad**
+- Team: **Car Care Sverige**
+- Live demo: **https://carcare-ai-field-assistant.web.app**
+- Public source: **https://github.com/MudherAhmad/carcare-ai-field-assistant**
+- Video channel: **Car Care Sverige / @CarCareSverige** (final video URL pending)
+
 ## Inspiration
 
 The first description of a vehicle problem is usually unstructured: a vibration, a smell, a warning light, or a change in handling. It may be written at the roadside, in a noisy workshop, with unreliable connectivity, and in the driver’s own language. We wanted that first note to become a useful, cautious inspection brief without pretending that an AI had physically inspected the car.
