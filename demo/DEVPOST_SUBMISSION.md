@@ -29,6 +29,7 @@ Hybrid inference is not just a network fallback. On-device availability, model d
 - A privacy boundary that shows what may reach the model.
 - Safety constraints that prevent the UI from presenting an AI guess as a confirmed diagnosis.
 - A verified live `IN_CLOUD` inspection brief from the deployed Firebase Hosting site.
+- A verified live `IN_CLOUD` inspection brief from the native Android app with App Check enforcement enabled.
 - A clean public repository with synthetic data and automated secret checks.
 
 ## What we learned

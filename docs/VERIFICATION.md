@@ -51,8 +51,11 @@ The debug APK was installed and launched on the local Android 16 / API 36.1 emul
 - The native Compose UI rendered in English with `Firebase AI Logic · ready`.
 - The synthetic braking-vibration sample populated the vehicle, mileage, and symptom fields.
 - The privacy preview rendered the exact redacted text and the decision-support disclaimer.
-- A live request was intentionally not counted as successful: Firebase rejected the emulator's unregistered debug App Check token with `Firebase App Check token is invalid`.
-- App Check enforcement was left enabled. Completing a live emulator request requires explicitly allow-listing that emulator-only debug token in Firebase; production protection was not weakened to manufacture a passing result.
+- The first live request was rejected because the emulator's App Check debug token had not yet been registered; the failure was not counted as a successful run.
+- After explicit owner approval, the actual emulator-only token was registered in Firebase without saving it to the repository or local project files.
+- A fresh live request rendered the complete structured inspection brief through Firebase AI Logic. The native UI showed inference source `In Cloud`, model `gemini-3.5-flash-lite`, urgency `Inspect soon`, and 85% confidence.
+- The rendered report included observed signals, owner-safe and professional-only inspection steps, suggested services, and the decision-support boundary.
+- App Check enforcement remained enabled throughout the verification.
 
 Clean screenshots of the verified Android states are stored in `demo/evidence/`.
 
@@ -66,7 +69,7 @@ The dedicated contest project is `carcare-ai-field-assistant` (project number `1
 - AI monitoring: enabled.
 - Firebase AI Logic App Check: Basic protection enforced.
 - Web provider: reCAPTCHA Enterprise, restricted to the two Firebase Hosting domains plus `localhost`.
-- Android provider: Play Integrity with the local debug signing certificate registered.
+- Android provider: Play Integrity with the local debug signing certificate registered; an emulator-only App Check debug token is registered for this local verification and is not committed.
 - Hosting: deployed to [carcare-ai-field-assistant.web.app](https://carcare-ai-field-assistant.web.app).
 - Cloud Billing: linked and enabled; a positive Gemini API Prepay balance is active and auto-reload is disabled.
 - Public source: published to [MudherAhmad/carcare-ai-field-assistant](https://github.com/MudherAhmad/carcare-ai-field-assistant); the published `main` branch passed the clean-room safety scan.
@@ -76,9 +79,8 @@ Client configuration, App Check debug tokens, Geoapify keys, signing keys, and p
 ## Remaining release evidence
 
 1. Capture an actual `ON_DEVICE` result on supported Chrome and Android hardware.
-2. Register the current emulator-only App Check debug token if a live cloud Android recording is required.
-3. Sign the Android release with the project owner's release key.
-4. Record the final live demo, upload it to YouTube, and submit through the entrant's Devpost account.
+2. Sign the Android release with the project owner's release key.
+3. Record the final live demo, upload it to YouTube, and submit through the entrant's Devpost account.
 
 These are release gates, not simulated evidence. See `docs/CONTEST_COMPLIANCE.md` for the exact checklist.
 
