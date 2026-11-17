@@ -8,8 +8,8 @@ Environment: Windows, Node.js 24.12.0, npm 11.6.2, JDK 17, Android SDK 36.
 | Surface | Check | Result |
 | --- | --- | --- |
 | Web | TypeScript project check | Passed |
-| Web | Vitest routing, redaction, schema, and Geoapify tests | **10 passed** |
-| Web | V8 coverage | 53.75% statements; 63.33% branches; 58.69% lines |
+| Web | Vitest routing, redaction, schema, provider-error, and Geoapify tests | **12 passed** |
+| Web | V8 coverage | 55.15% statements; 62.82% branches; 60.13% lines |
 | Web | Vite production build | Passed |
 | Web | `npm audit --omit=dev` | **0 known runtime vulnerabilities** |
 | Android | JUnit redaction, prompt, and schema tests | **5 passed** |
@@ -39,6 +39,9 @@ The production build was then deployed and checked at [carcare-ai-field-assistan
 - The first live request exposed two integration defects that were fixed and regression-tested: Firebase's response schema rejects `additionalProperties`, and the Web SDK returns lowercase `on_device` / `in_cloud` inference-source values.
 - The browser now checks Chrome's `LanguageModel.availability()` before claiming that Gemini Nano is ready. The verification browser correctly reports `Cloud fallback available; on-device model unavailable`.
 - A later cloud request returned `403: The Gemini API free tier is not available for this project`. Billing was deliberately not enabled without the project owner's separate financial approval, so a post-fix screenshot showing the `IN_CLOUD` label remains open.
+- On 2026-11-17 the project owner enabled Cloud Billing and started the Google Cloud free trial. The Cloud Billing API confirmed `billingEnabled: true` for the contest project.
+- A fresh production request then reached Gemini but returned `429: Your prepayment credits are depleted`. Google AI Studio requires a positive Gemini API Prepay balance; the Google Cloud welcome credit cannot fund Gemini API usage for this new account.
+- The production UI now maps that provider response to a short, localised billing-credit message instead of exposing the provider endpoint and raw error details.
 
 ## Connected Firebase evidence
 
@@ -52,6 +55,7 @@ The dedicated contest project is `carcare-ai-field-assistant` (project number `1
 - Web provider: reCAPTCHA Enterprise, restricted to the two Firebase Hosting domains plus `localhost`.
 - Android provider: Play Integrity with the local debug signing certificate registered.
 - Hosting: deployed to [carcare-ai-field-assistant.web.app](https://carcare-ai-field-assistant.web.app).
+- Cloud Billing: linked and enabled; the separate Gemini API Prepay balance remains empty.
 - Public source: published to [MudherAhmad/carcare-ai-field-assistant](https://github.com/MudherAhmad/carcare-ai-field-assistant); the published `main` branch passed the clean-room safety scan.
 
 Client configuration, App Check debug tokens, Geoapify keys, signing keys, and personal account credentials remain ignored and are not committed.
@@ -59,7 +63,7 @@ Client configuration, App Check debug tokens, Geoapify keys, signing keys, and p
 ## Remaining release evidence
 
 1. Capture an actual `ON_DEVICE` result on supported Chrome and Android hardware.
-2. Resolve the Gemini Developer API billing/free-tier gate and capture the corrected `IN_CLOUD` label.
+2. Add Gemini API Prepay credit in Google AI Studio and capture the corrected `IN_CLOUD` label.
 3. Sign the Android release with the project owner's release key.
 4. Record the final live demo, upload it to YouTube, and submit through the entrant's Devpost account.
 

@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { FirebaseHybridReportEngine, type HybridPreparation } from "./ai/hybridEngine";
 import { redactSensitiveText } from "./ai/redaction";
+import { toUserFacingAiError } from "./ai/errorMessage";
 import { getMessages } from "./i18n/messages";
 import { ReportView } from "./components/ReportView";
 import { findNearbyWorkshops } from "./services/geoapify";
@@ -63,7 +64,7 @@ export default function App() {
       await engine.prepare(setPreparation);
     } catch (cause) {
       setPreparation({ state: "idle", progress: 0 });
-      setError(cause instanceof Error ? cause.message : t.error);
+      setError(toUserFacingAiError(cause, t));
     }
   }
 
@@ -84,7 +85,7 @@ export default function App() {
       };
       setResult(await engine.generate(input, redaction.text));
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : t.error);
+      setError(toUserFacingAiError(cause, t));
     } finally {
       setBusy(false);
     }

@@ -50,6 +50,8 @@ export const messages = {
     ready: "On-device model ready",
     cloudOnly: "Cloud fallback available; on-device model unavailable",
     error: "Could not create the report",
+    billingCreditRequired: "Gemini API billing is active, but its prepaid credit is empty. Add credit in Google AI Studio, then try again.",
+    aiUnavailable: "The AI service is temporarily unavailable. Try again shortly.",
     loadSample: "Load synthetic sample",
   },
   sv: {
@@ -99,6 +101,8 @@ export const messages = {
     ready: "Lokal modell redo",
     cloudOnly: "Molnreserv tillgänglig; lokal modell saknas",
     error: "Kunde inte skapa rapporten",
+    billingCreditRequired: "Gemini API-fakturering är aktiv, men det förbetalda saldot är tomt. Lägg till saldo i Google AI Studio och försök igen.",
+    aiUnavailable: "AI-tjänsten är tillfälligt otillgänglig. Försök igen om en stund.",
     loadSample: "Ladda syntetiskt exempel",
   },
   ar: {
@@ -148,6 +152,8 @@ export const messages = {
     ready: "نموذج الجهاز جاهز",
     cloudOnly: "البديل السحابي متاح؛ نموذج الجهاز غير متاح",
     error: "تعذر إنشاء التقرير",
+    billingCreditRequired: "فوترة Gemini API مفعّلة، لكن الرصيد المدفوع مسبقاً فارغ. أضف رصيداً في Google AI Studio ثم حاول مجدداً.",
+    aiUnavailable: "خدمة الذكاء الاصطناعي غير متاحة مؤقتاً. حاول مجدداً بعد قليل.",
     loadSample: "تحميل مثال اصطناعي",
   },
 } as const;

@@ -9,7 +9,7 @@ Official deadline: **November 30, 2026 at 2:00 PM Pacific Time** (23:00 Europe/S
 | Cloud inference | Firebase AI Logic cloud fallback model | Implemented |
 | App Check | Web reCAPTCHA Enterprise and Android Play Integrity/debug setup | Registered; Basic protection enforced for Firebase AI Logic |
 | Platform | Chrome Web and native Android | Implemented |
-| Working demo | Synthetic, labelled UI mode plus live configuration path | Deployed at `https://carcare-ai-field-assistant.web.app`; cloud calls currently gated by Gemini billing availability |
+| Working demo | Synthetic, labelled UI mode plus live configuration path | Deployed at `https://carcare-ai-field-assistant.web.app`; Cloud Billing is linked, but Gemini API Prepay credit is empty |
 | Public source | Clean standalone MIT repository | Published at `https://github.com/MudherAhmad/carcare-ai-field-assistant` |
 | Video | English script, shot list, captions plan, max 3 minutes | Prepared; final live recording and YouTube upload pending project owner |
 | Written submission | Devpost copy in `demo/DEVPOST_SUBMISSION.md` | Prepared |
@@ -25,7 +25,7 @@ Official deadline: **November 30, 2026 at 2:00 PM Pacific Time** (23:00 Europe/S
 - [x] Enable Firebase AI Logic with the Gemini Developer API.
 - [x] Configure and enforce App Check for deployed builds.
 - [ ] Verify an `ON_DEVICE` result on supported Chrome and Android hardware.
-- [ ] Verify the corrected `IN_CLOUD` label after resolving the Gemini billing/free-tier gate.
+- [ ] Add a positive Gemini API Prepay balance and verify the corrected `IN_CLOUD` label.
 - [x] Deploy Firebase Hosting and record its public URL.
 - [x] Publish the source repository and run the clean-room safety scan on the published commit.
 - [ ] Record a live English demo of no more than 3 minutes.
