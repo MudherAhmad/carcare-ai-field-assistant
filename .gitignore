@@ -1,0 +1,28 @@
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+**/google-services.json
+**/GoogleService-Info.plist
+**/local.properties
+**/key.properties
+*.jks
+*.keystore
+
+# Dependencies and generated output
+node_modules/
+dist/
+build/
+.gradle/
+.firebase/
+firebase-debug.log
+*.log
+coverage/
+test-results/
+playwright-report/
+
+# Editor and OS files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

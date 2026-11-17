@@ -1,0 +1,77 @@
+import type { SchemaRequest } from "firebase/ai";
+
+export const reportJsonSchema: SchemaRequest = {
+  type: "object",
+  additionalProperties: false,
+  required: [
+    "schemaVersion",
+    "language",
+    "summary",
+    "urgency",
+    "confidence",
+    "observations",
+    "inspectionSteps",
+    "suggestedServices",
+    "safetyNotices",
+    "followUpQuestions",
+  ],
+  properties: {
+    schemaVersion: { type: "string", enum: ["1.0"] },
+    language: { type: "string", enum: ["ar", "sv", "en"] },
+    summary: { type: "string", maxLength: 600 },
+    urgency: { type: "string", enum: ["routine", "soon", "urgent", "stop_driving"] },
+    confidence: { type: "number", minimum: 0, maximum: 1 },
+    observations: {
+      type: "array",
+      maxItems: 8,
+      items: {
+        type: "object",
+        additionalProperties: false,
+        required: ["system", "symptom", "severity"],
+        properties: {
+          system: { type: "string", maxLength: 80 },
+          symptom: { type: "string", maxLength: 240 },
+          severity: { type: "string", enum: ["low", "medium", "high", "critical"] },
+        },
+      },
+    },
+    inspectionSteps: {
+      type: "array",
+      maxItems: 8,
+      items: {
+        type: "object",
+        additionalProperties: false,
+        required: ["title", "reason", "safetyLevel"],
+        properties: {
+          title: { type: "string", maxLength: 160 },
+          reason: { type: "string", maxLength: 280 },
+          safetyLevel: { type: "string", enum: ["owner_safe", "professional_only"] },
+        },
+      },
+    },
+    suggestedServices: {
+      type: "array",
+      maxItems: 6,
+      items: {
+        type: "object",
+        additionalProperties: false,
+        required: ["name", "reason", "priority"],
+        properties: {
+          name: { type: "string", maxLength: 140 },
+          reason: { type: "string", maxLength: 280 },
+          priority: { type: "string", enum: ["optional", "recommended", "priority", "immediate"] },
+        },
+      },
+    },
+    safetyNotices: {
+      type: "array",
+      maxItems: 5,
+      items: { type: "string", maxLength: 260 },
+    },
+    followUpQuestions: {
+      type: "array",
+      maxItems: 5,
+      items: { type: "string", maxLength: 220 },
+    },
+  },
+};

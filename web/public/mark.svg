@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="CarCare AI mark">
+  <rect width="64" height="64" rx="18" fill="#102b27"/>
+  <path d="M14 37.5h36l-3.5-11a5 5 0 0 0-4.8-3.5H22.3a5 5 0 0 0-4.8 3.5l-3.5 11Z" fill="#d9ff80"/>
+  <path d="M20 39h24v6a4 4 0 0 1-4 4H24a4 4 0 0 1-4-4v-6Z" fill="#f4f0e7"/>
+  <circle cx="23" cy="39" r="3" fill="#102b27"/>
+  <circle cx="41" cy="39" r="3" fill="#102b27"/>
+  <path d="m32 10 2.3 5.7L40 18l-5.7 2.3L32 26l-2.3-5.7L24 18l5.7-2.3L32 10Z" fill="#ff8c68"/>
+</svg>

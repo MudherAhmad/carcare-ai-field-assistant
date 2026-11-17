@@ -1,0 +1,19 @@
+{
+  "name": "CarCare AI Field Assistant",
+  "short_name": "CarCare AI",
+  "description": "Hybrid AI vehicle inspection briefs for the field.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f4f0e7",
+  "theme_color": "#102b27",
+  "lang": "en",
+  "dir": "auto",
+  "icons": [
+    {
+      "src": "/mark.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+[
+  {
+    "id": "brake-vibration-en",
+    "language": "en",
+    "vehicle": "2018 compact petrol car",
+    "mileageKm": 84000,
+    "notes": "The steering wheel shakes while braking from motorway speed. No warning lights. It started this week."
+  },
+  {
+    "id": "battery-warning-sv",
+    "language": "sv",
+    "vehicle": "2016 dieselkombi",
+    "mileageKm": 142000,
+    "notes": "Batterilampan tändes under körning och strålkastarna blev svagare. Motorn går fortfarande."
+  },
+  {
+    "id": "overheat-ar",
+    "language": "ar",
+    "vehicle": "سيارة بنزين موديل 2020",
+    "mileageKm": 67000,
+    "notes": "ارتفعت حرارة المحرك وظهر بخار خفيف من مقدمة السيارة. أوقفت السيارة ولم أفتح غطاء سائل التبريد."
+  }
+]
