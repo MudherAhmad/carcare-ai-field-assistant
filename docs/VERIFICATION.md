@@ -53,6 +53,20 @@ A separate run confirmed that the privacy preview redacts a fictional email in t
 
 The evidence-review build was released to Firebase Hosting from the source published in commit `a2131d4`. The hosted app returned HTTP 200 and served the tested `index-BlRXidCL.js` bundle. A fresh browser run on the public URL confirmed the seat-mark workflow end to end with two live `IN CLOUD` responses. The revised brief recommended interior upholstery cleaning and attributed that recommendation to the technician's observation. Reloading the standard sample returned to the regular inspection form.
 
+## Controlled workshop-case comparison
+
+On 2026-11-18, three fictional cases were run through the deployed Web app in Chrome. Each case used the same intake in the regular and evidence-review flows. The third request added a prepared technician observation. All nine responses reported `IN CLOUD` with `gemini-3.5-flash-lite`.
+
+| Case and later observation | Regular report at intake | Evidence review at intake | Evidence review after observation |
+| --- | --- | --- | --- |
+| Customer requested seat replacement. The technician found intact fabric and a superficial stain. | Optional upholstery cleaning | Service suggestions deferred. The app asked for the technician's findings about the mark. | Upholstery cleaning recommended, citing the intact fabric and superficial stain. |
+| Customer requested bumper repainting. The technician found removable transfer and intact paint. | Optional body shop consultation to assess the paint | Service suggestions deferred. The app asked about the paint condition under the mark. | Both accounts shown and no repainting suggested. |
+| Customer requested a replacement passenger door after rainwater entry. The technician found a torn weatherstrip and an intact door panel and channel. | Body shop inspection to diagnose the leak before replacing components | Service suggestions deferred. The app asked what the technician found about the leak. | Weatherstrip replacement proposed, citing the tear and intact door. |
+
+The evidence-review flow deferred service suggestions in all three intake runs. The revised decisions matched the expected scope in all three cases. The regular workflow also treated the evidence as incomplete and proposed assessment or optional cleaning. These runs measure the behavior of two workflows on fictional inputs. Technician time, report corrections, and effects on workshop decisions remain unmeasured. The [workshop pilot](FIELD_PILOT.md) records those measures with the same review criteria for both workflows.
+
+The Web and Android instructions were then updated to ask for the affected part and a concrete observable condition. A local Web run made six live cloud requests over the same cases, one before and one after each technician observation. The questions distinguished torn fabric from a stain, cracked bumper trim from a surface scuff, and damaged weatherstripping from wear. Service suggestions remained deferred in all three intake runs. With observations, the brief suggested upholstery cleaning for the seat, no paint work for the bumper, and seal replacement for the door. The Web build and 14 tests passed. The matching Android change built and passed its six unit tests.
+
 ## Android emulator verification
 
 The debug APK was installed and launched on the local Android 16 / API 36.1 emulator:
