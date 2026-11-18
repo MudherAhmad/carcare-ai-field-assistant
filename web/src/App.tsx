@@ -33,12 +33,27 @@ const seatSamples: Record<Locale, string> = {
 
 const engine = new FirebaseHybridReportEngine();
 
+const quoteReviewHint: Record<Locale, string> = {
+  en: "Review the evidence before quoting. Enter anonymous observations, then bring your own reviewed rationale back to the proposal.",
+  sv: "Granska underlaget före prisförslaget. Ange observationer utan personuppgifter och ta sedan med din granskade motivering tillbaka till förslaget.",
+  ar: "راجع الدليل قبل تقديم السعر. أدخل ملاحظات خالية من البيانات التعريفية، ثم أضف السبب الذي راجعته إلى عرض السعر.",
+};
+
 export default function App() {
-  const [locale, setLocale] = useState<Locale>("en");
+  const [entry] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    const language = params.get("lang");
+    const locale: Locale = language === "sv" || language === "ar" ? language : "en";
+    return {
+      quoteReview: params.get("review") === "quote",
+      locale,
+    };
+  });
+  const [locale, setLocale] = useState<Locale>(entry.locale);
   const [vehicle, setVehicle] = useState("");
   const [mileage, setMileage] = useState("");
   const [notes, setNotes] = useState("");
-  const [reviewEvidence, setReviewEvidence] = useState(false);
+  const [reviewEvidence, setReviewEvidence] = useState(entry.quoteReview);
   const [technicianNote, setTechnicianNote] = useState("");
   const [preparation, setPreparation] = useState<HybridPreparation>({ state: "idle", progress: 0 });
   const [result, setResult] = useState<ReportResult>();
@@ -179,6 +194,7 @@ export default function App() {
               <button className="text-button" type="button" onClick={() => loadSample()} disabled={busy}>{t.loadSample}</button>
             </div>
             <p className="form-hint">{t.formHint}</p>
+            {entry.quoteReview && <p className="form-hint">{quoteReviewHint[locale]}</p>}
 
             <label>
               <span>{t.vehicle}</span>

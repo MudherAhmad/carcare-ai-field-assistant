@@ -18,11 +18,17 @@ The deployed web app generated a live inspection brief in Chrome on Windows with
 
 The first description of a vehicle problem is usually unstructured: a vibration, a smell, a warning light, or a change in handling. It may be written at the roadside, in a noisy workshop, with unreliable connectivity, and in the driver’s own language. We wanted that first note to become a useful, cautious inspection brief without pretending that an AI had physically inspected the car.
 
+During my own automatic transmission service, an extra flush was proposed after the initial estimate. I wanted to understand what the technician had observed, why the extra work was recommended, and what I was being asked to approve. That experience led to a question we built around. What evidence should a workshop have before it proposes extra work?
+
+Our existing Car Care Sverige platform already supports booking, vehicle intake, inspection photos, and itemized proposals that customers can review. For the hackathon we built CarCare AI Field Assistant, which uses Firebase AI Logic to review workshop notes and ask for missing evidence before a service is suggested. The seat-mark case in the judging demo illustrates that new evidence review with sample data. The existing platform explains where the resulting reasoning can be useful in day-to-day workshop work.
+
 ## What it does
 
 CarCare AI Field Assistant accepts Arabic, Swedish, or English vehicle notes and produces a structured brief with urgency, observations, inspection steps, suggested services, safety notices, and follow-up questions. It redacts common identifiers locally, shows the redacted prompt, and reports whether Firebase AI Logic used on-device or cloud inference. An optional Geoapify action finds nearby car-repair services without sharing the note or report.
 
 In the evidence-review workflow, CarCare records the customer's request and the technician's observation separately. In the tested seat-mark example, it deferred service suggestions while the technician field was blank. Once the technician reported intact fabric and a superficial stain, the revised brief recommended upholstery cleaning and showed the observation that supported that suggestion.
+
+Judges can [open evidence review directly](https://carcare-ai-field-assistant.web.app/?review=quote&lang=en) and load the seat-mark example. This entry opens a blank review without a booking identifier or any customer data. Staff decide what reasoning belongs in a proposal after reviewing the brief.
 
 ## How we built it
 
