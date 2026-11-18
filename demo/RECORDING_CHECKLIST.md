@@ -20,4 +20,4 @@
 - [x] Verify full video and audio decoding and inspect the inference-source labels in the export.
 - [x] Integrate the 37-second seat-mark evidence review into the same demo using frames from the live web run. The combined export is `demo/output/CarCare_AI_Field_Assistant_Demo_Evidence_Review.mp4`, 2:21.51 at 1080p, with English narration and captions.
 - [x] Upload the [updated public video](https://youtu.be/u5mh45_Y2dY) and verify the title and channel through YouTube's public oEmbed endpoint.
-- [ ] Update the judging video in the existing Devpost submission.
+- [x] Update the judging video in the existing Devpost submission. Reopening Project details confirmed `https://youtu.be/u5mh45_Y2dY` in the saved Demo video URL field and `SUBMITTED` status.

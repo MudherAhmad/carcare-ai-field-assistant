@@ -51,6 +51,8 @@ The local Chrome build exercised the fictional passenger-seat case twice through
 
 A separate run confirmed that the privacy preview redacts a fictional email in the technician note and that the revised report does not expose it. The Web production build and 14 tests passed. The Android debug APK built and six unit tests passed. A live Android run of this new flow remains pending.
 
+The evidence-review build was released to Firebase Hosting from the source published in commit `a2131d4`. The hosted app returned HTTP 200 and served the tested `index-BlRXidCL.js` bundle. A fresh browser run on the public URL confirmed the seat-mark workflow end to end with two live `IN CLOUD` responses. The revised brief recommended interior upholstery cleaning and attributed that recommendation to the technician's observation. Reloading the standard sample returned to the regular inspection form.
+
 ## Android emulator verification
 
 The debug APK was installed and launched on the local Android 16 / API 36.1 emulator:
@@ -103,6 +105,10 @@ The owner published the demo at https://youtu.be/rlovigZkyo8 on 2026-11-18. YouT
 The final local demo render is 2:48.80, 1920 x 1080 at 30 fps, H.264/AAC, with English narration and burned English captions. It completed a full decode verification. The 14,636,897-byte file has SHA-256 `35F90A8FB936A62BCD4D8E2E3D0F635E07556A9B5F107A1024C55088C557219A`. Generated media is ignored by Git; upload metadata is recorded in `demo/YOUTUBE_METADATA.md`.
 
 On 2026-11-18, the owner published the updated 2:21.51 demo at https://youtu.be/u5mh45_Y2dY. YouTube Studio confirmed publication. YouTube's public oEmbed endpoint returned `CarCare AI Field Assistant | Gemini Nano & Firebase AI Logic` from `Car care Sverige`. The updated demo shows the verified Chrome on-device run, the live cloud seat-mark workflow, and the native Android emulator cloud test.
+
+The owner saved the updated story and judging video in Devpost submission `1310126`. Reopening that submission's Project details form confirmed `SUBMITTED`, the saved video URL `https://youtu.be/u5mh45_Y2dY`, the Chrome on-device evidence, the seat-mark workflow, and the description of a future fleet pilot.
+
+Reopening the submission's Additional info form confirmed the saved technology answer and judge testing instructions. They reference the verified Chrome `ON DEVICE` result, the updated video, and the steps for both the regular report and the seat-mark evidence review.
 
 These are release gates, not simulated evidence. See `docs/CONTEST_COMPLIANCE.md` for the exact checklist.
 
