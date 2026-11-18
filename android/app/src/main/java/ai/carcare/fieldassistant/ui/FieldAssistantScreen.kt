@@ -41,7 +41,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ai.carcare.fieldassistant.data.EngineResult
-import ai.carcare.fieldassistant.data.InspectionReportPayload
+import ai.carcare.fieldassistant.ai.RedactionResult
 
 private val Ink = Color(0xFF102B27)
 private val Paper = Color(0xFFF4F0E7)
@@ -61,19 +61,22 @@ fun FieldAssistantScreen(viewModel: FieldAssistantViewModel) {
                 contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 18.dp, vertical = 20.dp),
                 verticalArrangement = Arrangement.spacedBy(18.dp),
             ) {
-                item { AppBar(state.language, viewModel::setLanguage) }
+                item { AppBar(state.language, !state.loading, viewModel::setLanguage) }
                 item { Hero(t, viewModel.isAvailable, viewModel.isSyntheticDemo) }
                 item {
                     InputCard(
                         t = t,
                         state = state,
-                        redacted = viewModel.redaction.text,
-                        redactionCount = viewModel.redaction.count,
+                        intake = viewModel.redaction,
+                        technician = viewModel.technicianRedaction,
                         available = viewModel.isAvailable,
+                        synthetic = viewModel.isSyntheticDemo,
                         onVehicle = viewModel::setVehicle,
                         onMileage = viewModel::setMileage,
                         onNotes = viewModel::setNotes,
                         onSample = viewModel::loadSample,
+                        onReviewEvidence = viewModel::setReviewEvidence,
+                        onTechnicianNote = viewModel::setTechnicianNote,
                         onGenerate = viewModel::generate,
                     )
                 }
@@ -92,7 +95,7 @@ fun FieldAssistantScreen(viewModel: FieldAssistantViewModel) {
 }
 
 @Composable
-private fun AppBar(language: String, onLanguage: (String) -> Unit) {
+private fun AppBar(language: String, enabled: Boolean, onLanguage: (String) -> Unit) {
     Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween) {
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
             Box(modifier = Modifier.size(38.dp).background(Ink, RoundedCornerShape(12.dp)), contentAlignment = Alignment.Center) {
@@ -102,7 +105,7 @@ private fun AppBar(language: String, onLanguage: (String) -> Unit) {
         }
         Row(horizontalArrangement = Arrangement.spacedBy(5.dp)) {
             listOf("en", "sv", "ar").forEach { code ->
-                FilterChip(selected = language == code, onClick = { onLanguage(code) }, label = { Text(code.uppercase(), fontSize = 10.sp) })
+                FilterChip(selected = language == code, onClick = { onLanguage(code) }, enabled = enabled, label = { Text(code.uppercase(), fontSize = 10.sp) })
             }
         }
     }
@@ -134,25 +137,50 @@ private fun StatusPill(text: String, good: Boolean) {
 private fun InputCard(
     t: UiMessages,
     state: FieldUiState,
-    redacted: String,
-    redactionCount: Int,
+    intake: RedactionResult,
+    technician: RedactionResult,
     available: Boolean,
+    synthetic: Boolean,
     onVehicle: (String) -> Unit,
     onMileage: (String) -> Unit,
     onNotes: (String) -> Unit,
-    onSample: () -> Unit,
+    onSample: (Boolean) -> Unit,
+    onReviewEvidence: (Boolean) -> Unit,
+    onTechnicianNote: (String) -> Unit,
     onGenerate: () -> Unit,
 ) {
     Card(colors = CardDefaults.cardColors(containerColor = PaperBright), shape = RoundedCornerShape(26.dp), elevation = CardDefaults.cardElevation(defaultElevation = 3.dp)) {
         Column(modifier = Modifier.padding(22.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
                 Text(t.vehicle, fontFamily = FontFamily.Serif, fontSize = 28.sp, color = Ink)
-                OutlinedButton(onClick = onSample) { Text(t.loadSample, fontSize = 10.sp) }
+                OutlinedButton(onClick = { onSample(false) }, enabled = !state.loading) { Text(t.loadSample, fontSize = 10.sp) }
             }
-            OutlinedTextField(value = state.vehicle, onValueChange = onVehicle, modifier = Modifier.fillMaxWidth(), label = { Text(t.vehicle) }, placeholder = { Text(t.vehicleHint) }, singleLine = true)
-            OutlinedTextField(value = state.mileage, onValueChange = onMileage, modifier = Modifier.fillMaxWidth(), label = { Text(t.mileage) }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number), singleLine = true)
-            OutlinedTextField(value = state.notes, onValueChange = onNotes, modifier = Modifier.fillMaxWidth().height(156.dp), label = { Text(t.notes) }, placeholder = { Text(t.notesHint) }, supportingText = { Text("${state.notes.length} / 3000") })
+            OutlinedTextField(value = state.vehicle, onValueChange = onVehicle, enabled = !state.loading, modifier = Modifier.fillMaxWidth(), label = { Text(t.vehicle) }, placeholder = { Text(t.vehicleHint) }, singleLine = true)
+            OutlinedTextField(value = state.mileage, onValueChange = onMileage, enabled = !state.loading, modifier = Modifier.fillMaxWidth(), label = { Text(t.mileage) }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number), singleLine = true)
+            OutlinedTextField(value = state.notes, onValueChange = onNotes, enabled = !state.loading, modifier = Modifier.fillMaxWidth().height(156.dp), label = { Text(if (state.reviewEvidence) t.intakeNote else t.notes) }, placeholder = { Text(t.notesHint) }, supportingText = { Text("${state.notes.length} / 3000") })
 
+            if (!synthetic) {
+                FilterChip(
+                    selected = state.reviewEvidence,
+                    onClick = { onReviewEvidence(!state.reviewEvidence) },
+                    enabled = !state.loading,
+                    label = { Text(t.reviewEvidence) },
+                )
+                if (state.reviewEvidence) {
+                    OutlinedButton(onClick = { onSample(true) }, enabled = !state.loading) { Text(t.loadSeatSample) }
+                    OutlinedTextField(
+                        value = state.technicianNote,
+                        onValueChange = onTechnicianNote,
+                        enabled = !state.loading,
+                        modifier = Modifier.fillMaxWidth(),
+                        label = { Text(t.technicianNote) },
+                        placeholder = { Text(t.technicianHint) },
+                        minLines = 3,
+                    )
+                }
+            }
+
+            val redactionCount = intake.count + if (state.reviewEvidence) technician.count else 0
             Column(
                 modifier = Modifier.fillMaxWidth().background(Color(0xFFE8F2ED), RoundedCornerShape(18.dp)).padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(9.dp),
@@ -160,8 +188,9 @@ private fun InputCard(
                 Text("✓  ${t.privacy}", color = Ink, fontWeight = FontWeight.Bold, fontSize = 13.sp)
                 Text(if (redactionCount > 0) "$redactionCount ${t.identifiers}" else t.noIdentifiers, color = Ink.copy(alpha = 0.64f), fontSize = 11.sp, lineHeight = 16.sp)
                 if (state.notes.isNotBlank()) {
-                    Text(redacted, color = Ink.copy(alpha = 0.75f), fontSize = 11.sp, lineHeight = 16.sp, modifier = Modifier.fillMaxWidth().background(Color.White.copy(alpha = 0.6f), RoundedCornerShape(12.dp)).padding(12.dp))
+                    PrivacyText(if (state.reviewEvidence) "${t.intakeNote}\n${intake.text}" else intake.text)
                 }
+                if (state.reviewEvidence && state.technicianNote.isNotBlank()) PrivacyText("${t.technicianNote}\n${technician.text.trim().take(1000)}")
             }
 
             Button(
@@ -170,7 +199,15 @@ private fun InputCard(
                 colors = ButtonDefaults.buttonColors(containerColor = Ink, contentColor = Color.White),
                 shape = RoundedCornerShape(14.dp),
                 modifier = Modifier.fillMaxWidth().height(52.dp),
-            ) { Text(if (state.loading) t.generating else t.generate, fontWeight = FontWeight.Bold) }
+            ) {
+                val action = when {
+                    state.loading -> t.generating
+                    !state.reviewEvidence -> t.generate
+                    state.technicianNote.isBlank() -> t.checkEvidence
+                    else -> t.updateReport
+                }
+                Text(action, fontWeight = FontWeight.Bold)
+            }
 
             state.error?.let { Text(it, color = MaterialTheme.colorScheme.error, fontSize = 12.sp) }
             if (!available) Text(t.setupRequired, color = MaterialTheme.colorScheme.error, fontSize = 11.sp)
@@ -179,37 +216,56 @@ private fun InputCard(
 }
 
 @Composable
+private fun PrivacyText(value: String) {
+    Text(value, color = Ink.copy(alpha = 0.75f), fontSize = 11.sp, lineHeight = 16.sp, modifier = Modifier.fillMaxWidth().background(Color.White.copy(alpha = 0.6f), RoundedCornerShape(12.dp)).padding(12.dp))
+}
+
+@Composable
 private fun ReportCard(result: EngineResult, t: UiMessages) {
     val report = result.report
+    val review = result.evidenceReview
+    val waitingForEvidence = review?.technicianNote == ""
+    val questions = if (waitingForEvidence) listOf(report.followUpQuestions.firstOrNull() ?: t.evidenceQuestion) else report.followUpQuestions
     Card(colors = CardDefaults.cardColors(containerColor = PaperBright), shape = RoundedCornerShape(26.dp), elevation = CardDefaults.cardElevation(defaultElevation = 3.dp)) {
         Column(verticalArrangement = Arrangement.spacedBy(24.dp)) {
             Box(Modifier.fillMaxWidth().height(7.dp).background(urgencyColor(report.urgency)))
             Column(modifier = Modifier.padding(horizontal = 22.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
                 Text(t.report.uppercase(), color = MaterialTheme.colorScheme.secondary, fontWeight = FontWeight.Black, fontSize = 10.sp, letterSpacing = 1.2.sp)
-                Text(report.summary, color = Ink, fontFamily = FontFamily.Serif, fontSize = 27.sp, lineHeight = 32.sp)
+                Text(if (waitingForEvidence) t.evidenceNeeded else report.summary, color = Ink, fontFamily = FontFamily.Serif, fontSize = 27.sp, lineHeight = 32.sp)
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     EvidenceChip(t.source, result.source)
                     EvidenceChip(t.model, result.modelName)
                     EvidenceChip(t.urgency, t.urgencyNames[report.urgency] ?: report.urgency)
-                    EvidenceChip(t.confidence, "${(report.confidence * 100).toInt()}%")
+                    if (!waitingForEvidence) EvidenceChip(t.confidence, "${(report.confidence * 100).toInt()}%")
                 }
-                ReportSection(t.observations) {
-                    report.observations.forEach { observation ->
-                        BorderedItem(observation.system, observation.symptom, observation.severity)
+                if (review != null) {
+                    ReportSection(if (waitingForEvidence) t.intakeNote else t.evidenceReceived) {
+                        BorderedItem(t.intakeNote, review.intake, "")
+                        if (waitingForEvidence) Text(t.evidencePending, color = Ink, fontSize = 12.sp)
+                        else BorderedItem(t.technicianNote, review.technicianNote, "")
                     }
                 }
-                ReportSection(t.steps) {
-                    report.inspectionSteps.forEachIndexed { index, step ->
-                        BorderedItem("${index + 1}. ${step.title}", step.reason, if (step.safetyLevel == "professional_only") t.professional else t.ownerSafe)
+                if (!waitingForEvidence) {
+                    ReportSection(t.observations) {
+                        report.observations.forEach { observation ->
+                            BorderedItem(observation.system, observation.symptom, observation.severity)
+                        }
                     }
-                }
-                ReportSection(t.services) {
-                    report.suggestedServices.forEach { service ->
-                        BorderedItem(service.name, service.reason, service.priority)
+                    ReportSection(t.steps) {
+                        report.inspectionSteps.forEachIndexed { index, step ->
+                            BorderedItem("${index + 1}. ${step.title}", step.reason, if (step.safetyLevel == "professional_only") t.professional else t.ownerSafe)
+                        }
+                    }
+                    if (review == null || report.suggestedServices.isNotEmpty()) {
+                        ReportSection(t.services) {
+                            report.suggestedServices.forEach { service ->
+                                BorderedItem(service.name, service.reason, service.priority)
+                            }
+                        }
                     }
                 }
                 if (report.safetyNotices.isNotEmpty()) ReportBulletSection(t.notices, report.safetyNotices, true)
-                if (report.followUpQuestions.isNotEmpty()) ReportBulletSection(t.questions, report.followUpQuestions, false)
+                if (questions.isNotEmpty()) ReportBulletSection(t.questions, questions, false)
                 Text(t.disclaimer, color = Ink.copy(alpha = 0.58f), fontSize = 10.sp, modifier = Modifier.padding(bottom = 24.dp))
             }
         }
@@ -240,7 +296,7 @@ private fun BorderedItem(title: String, body: String, tag: String) {
     ) {
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             Text(title, color = Ink, fontSize = 13.sp, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f))
-            Text(tag.replace('_', ' '), color = Ink.copy(alpha = 0.62f), fontSize = 8.sp, modifier = Modifier.background(Lime.copy(alpha = 0.45f), RoundedCornerShape(50.dp)).padding(horizontal = 7.dp, vertical = 4.dp))
+            if (tag.isNotEmpty()) Text(tag.replace('_', ' '), color = Ink.copy(alpha = 0.62f), fontSize = 8.sp, modifier = Modifier.background(Lime.copy(alpha = 0.45f), RoundedCornerShape(50.dp)).padding(horizontal = 7.dp, vertical = 4.dp))
         }
         Text(body, color = Ink.copy(alpha = 0.65f), fontSize = 11.sp, lineHeight = 16.sp)
     }

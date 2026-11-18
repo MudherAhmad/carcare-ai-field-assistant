@@ -7,13 +7,15 @@ interface ReportViewProps {
 }
 
 export function ReportView({ result, messages: t }: ReportViewProps) {
-  const { report } = result;
+  const { report, evidenceReview } = result;
+  const waitingForEvidence = evidenceReview?.technicianNote === "";
+  const questions = waitingForEvidence ? [report.followUpQuestions[0] || t.evidenceQuestion] : report.followUpQuestions;
   return (
     <article className={`report urgency-${report.urgency}`} aria-live="polite">
       <div className="report-header">
         <div>
           <p className="section-kicker">{t.reportTitle}</p>
-          <h2>{report.summary}</h2>
+          <h2>{waitingForEvidence ? t.evidenceNeeded : report.summary}</h2>
         </div>
         <div className="urgency-badge">
           <span>{t.urgency}</span>
@@ -21,7 +23,7 @@ export function ReportView({ result, messages: t }: ReportViewProps) {
         </div>
       </div>
 
-      <div className="evidence-row">
+      <div className={`evidence-row${waitingForEvidence ? " pending-evidence" : ""}`}>
         <div className={`source-chip source-${result.source.toLowerCase()}`}>
           <span>{t.source}</span>
           <strong>{result.source.replaceAll("_", " ")}</strong>
@@ -30,12 +32,31 @@ export function ReportView({ result, messages: t }: ReportViewProps) {
           <span>{t.model}</span>
           <strong>{result.modelName}</strong>
         </div>
-        <div className="source-chip">
+        {!waitingForEvidence && <div className="source-chip">
           <span>{t.confidence}</span>
           <strong>{Math.round(report.confidence * 100)}%</strong>
-        </div>
+        </div>}
       </div>
 
+      {evidenceReview && (
+        <section className="report-section report-evidence">
+          <header><h2>{waitingForEvidence ? t.intakeNote : t.evidenceReceived}</h2></header>
+          {waitingForEvidence ? (
+            <>
+              <p className="evidence-text">{evidenceReview.intake}</p>
+              <p>{t.evidencePending}</p>
+              <a href="#technician-note" className="text-button">{t.addEvidence}</a>
+            </>
+          ) : (
+            <div className="card-grid">
+              <div className="report-card"><h3>{t.intakeNote}</h3><p className="evidence-text">{evidenceReview.intake}</p></div>
+              <div className="report-card"><h3>{t.technicianNote}</h3><p className="evidence-text">{evidenceReview.technicianNote}</p></div>
+            </div>
+          )}
+        </section>
+      )}
+
+      {!waitingForEvidence && <>
       <ReportSection title={t.observations} index="01">
         <div className="card-grid">
           {report.observations.map((item, index) => (
@@ -67,7 +88,7 @@ export function ReportView({ result, messages: t }: ReportViewProps) {
         </ol>
       </ReportSection>
 
-      <ReportSection title={t.services} index="03">
+      {(!evidenceReview || report.suggestedServices.length > 0) && <ReportSection title={t.services} index="03">
         <div className="service-list">
           {report.suggestedServices.map((item, index) => (
             <div className="service-row" key={`${item.name}-${index}`}>
@@ -76,20 +97,21 @@ export function ReportView({ result, messages: t }: ReportViewProps) {
             </div>
           ))}
         </div>
-      </ReportSection>
+      </ReportSection>}
+      </>}
 
-      {(report.safetyNotices.length > 0 || report.followUpQuestions.length > 0) && (
+      {(report.safetyNotices.length > 0 || questions.length > 0) && (
         <div className="split-sections">
-          <ReportSection title={t.notices} index="04">
+          {report.safetyNotices.length > 0 && <ReportSection title={t.notices} index="04">
             <ul className="plain-list warning-list">
               {report.safetyNotices.map((item) => <li key={item}>{item}</li>)}
             </ul>
-          </ReportSection>
-          <ReportSection title={t.questions} index="05">
+          </ReportSection>}
+          {questions.length > 0 && <ReportSection title={t.questions} index="05">
             <ul className="plain-list">
-              {report.followUpQuestions.map((item) => <li key={item}>{item}</li>)}
+              {questions.map((item) => <li key={item}>{item}</li>)}
             </ul>
-          </ReportSection>
+          </ReportSection>}
         </div>
       )}
       <p className="report-disclaimer">{t.disclaimer}</p>

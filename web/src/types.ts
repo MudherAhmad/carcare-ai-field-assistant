@@ -39,12 +39,14 @@ export interface VehicleInput {
   vehicle: string;
   mileageKm?: number;
   notes: string;
+  redactedTechnicianNote?: string;
 }
 
 export interface ReportResult {
   report: InspectionReport;
   source: InferenceSource;
   modelName: string;
+  evidenceReview?: { intake: string; technicianNote: string };
 }
 
 export interface NearbyWorkshop {

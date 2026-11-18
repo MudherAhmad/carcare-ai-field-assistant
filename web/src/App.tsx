@@ -25,6 +25,12 @@ const samples: Record<Locale, Omit<VehicleInput, "language">> = {
   },
 };
 
+const seatSamples: Record<Locale, string> = {
+  en: "The customer noticed a mark on the fabric passenger seat and asked to replace the seat. The cause is unknown.",
+  sv: "Kunden såg ett märke på passagerarsätets tyg och bad att få sätet utbytt. Orsaken är okänd.",
+  ar: "لاحظ الزبون أثراً على قماش مقعد الراكب وطلب تبديل المقعد. سبب الأثر غير معروف.",
+};
+
 const engine = new FirebaseHybridReportEngine();
 
 export default function App() {
@@ -32,6 +38,8 @@ export default function App() {
   const [vehicle, setVehicle] = useState("");
   const [mileage, setMileage] = useState("");
   const [notes, setNotes] = useState("");
+  const [reviewEvidence, setReviewEvidence] = useState(false);
+  const [technicianNote, setTechnicianNote] = useState("");
   const [preparation, setPreparation] = useState<HybridPreparation>({ state: "idle", progress: 0 });
   const [result, setResult] = useState<ReportResult>();
   const [error, setError] = useState("");
@@ -41,6 +49,9 @@ export default function App() {
   const [locationError, setLocationError] = useState("");
   const t = getMessages(locale);
   const redaction = useMemo(() => redactSensitiveText(notes), [notes]);
+  const technicianRedaction = useMemo(() => redactSensitiveText(technicianNote), [technicianNote]);
+  const technicianText = technicianRedaction.text.trim().slice(0, 1000);
+  const identifierCount = redaction.total + (reviewEvidence ? technicianRedaction.total : 0);
   const direction = locale === "ar" ? "rtl" : "ltr";
 
   function changeLocale(next: Locale) {
@@ -50,11 +61,13 @@ export default function App() {
     document.documentElement.dir = next === "ar" ? "rtl" : "ltr";
   }
 
-  function loadSample() {
+  function loadSample(review = false) {
     const sample = samples[locale];
     setVehicle(sample.vehicle);
     setMileage(String(sample.mileageKm));
-    setNotes(sample.notes);
+    setNotes(review ? seatSamples[locale] : sample.notes);
+    setReviewEvidence(review);
+    setTechnicianNote("");
     setResult(undefined);
   }
 
@@ -70,7 +83,7 @@ export default function App() {
 
   async function submit(event: React.FormEvent) {
     event.preventDefault();
-    if (!notes.trim()) return;
+    if (busy || notes.trim().length < 12) return;
     setBusy(true);
     setError("");
     setResult(undefined);
@@ -82,8 +95,13 @@ export default function App() {
         vehicle: vehicle.trim(),
         mileageKm: Number.isFinite(parsedMileage) && parsedMileage! >= 0 ? parsedMileage : undefined,
         notes,
+        redactedTechnicianNote: reviewEvidence ? technicianText : undefined,
       };
-      setResult(await engine.generate(input, redaction.text));
+      const next = await engine.generate(input, redaction.text);
+      setResult(input.redactedTechnicianNote === undefined ? next : {
+        ...next,
+        evidenceReview: { intake: redaction.text, technicianNote: input.redactedTechnicianNote },
+      });
     } catch (cause) {
       setError(toUserFacingAiError(cause, t));
     } finally {
@@ -126,6 +144,7 @@ export default function App() {
               key={item}
               onClick={() => changeLocale(item)}
               aria-pressed={locale === item}
+              disabled={busy}
             >
               {item.toUpperCase()}
             </button>
@@ -157,36 +176,62 @@ export default function App() {
           <form className="input-panel" onSubmit={submit}>
             <div className="panel-heading">
               <div><span>01</span><h2>{t.formTitle}</h2></div>
-              <button className="text-button" type="button" onClick={loadSample}>{t.loadSample}</button>
+              <button className="text-button" type="button" onClick={() => loadSample()} disabled={busy}>{t.loadSample}</button>
             </div>
             <p className="form-hint">{t.formHint}</p>
 
             <label>
               <span>{t.vehicle}</span>
-              <input value={vehicle} onChange={(event) => setVehicle(event.target.value)} placeholder={t.vehiclePlaceholder} maxLength={160} />
+              <input value={vehicle} onChange={(event) => { setVehicle(event.target.value); setResult(undefined); }} placeholder={t.vehiclePlaceholder} maxLength={160} disabled={busy} />
             </label>
             <label>
               <span>{t.mileage}</span>
-              <input value={mileage} onChange={(event) => setMileage(event.target.value)} inputMode="numeric" type="number" min="0" max="2000000" />
+              <input value={mileage} onChange={(event) => { setMileage(event.target.value); setResult(undefined); }} inputMode="numeric" type="number" min="0" max="2000000" disabled={busy} />
             </label>
             <label className="notes-field">
-              <span>{t.notes}</span>
-              <textarea value={notes} onChange={(event) => setNotes(event.target.value)} placeholder={t.notesPlaceholder} minLength={12} maxLength={3000} required />
+              <span>{reviewEvidence ? t.intakeNote : t.notes}</span>
+              <textarea value={notes} onChange={(event) => { setNotes(event.target.value); setResult(undefined); }} placeholder={t.notesPlaceholder} minLength={12} maxLength={3000} required disabled={busy} />
               <small>{notes.length} / 3000</small>
             </label>
 
+            {!engine.isSyntheticDemo() && (
+              <div className="evidence-controls">
+                <label className="evidence-toggle">
+                  <input type="checkbox" checked={reviewEvidence} disabled={busy} onChange={(event) => {
+                    setReviewEvidence(event.target.checked);
+                    setTechnicianNote("");
+                    setResult(undefined);
+                  }} />
+                  <span>{t.reviewEvidence}</span>
+                </label>
+                {reviewEvidence && (
+                  <>
+                    <button className="text-button" type="button" onClick={() => loadSample(true)} disabled={busy}>{t.loadSeatSample}</button>
+                    <label>
+                      <span>{t.technicianNote}</span>
+                      <textarea id="technician-note" className="technician-note" value={technicianNote} onChange={(event) => {
+                        setTechnicianNote(event.target.value);
+                        if (result?.evidenceReview?.technicianNote) setResult(undefined);
+                      }} placeholder={t.technicianPlaceholder} maxLength={1000} disabled={busy} />
+                    </label>
+                  </>
+                )}
+              </div>
+            )}
+
             <div className="privacy-preview">
               <div className="privacy-title"><span className="shield">✓</span><strong>{t.redactionTitle}</strong></div>
-              <p>{redaction.total ? `${redaction.total} ${t.redactionFound}` : t.redactionNone}</p>
-              {notes && <pre>{redaction.text}</pre>}
+              <p>{identifierCount ? `${identifierCount} ${t.redactionFound}` : t.redactionNone}</p>
+              {notes && <pre>{reviewEvidence ? `${t.intakeNote}\n${redaction.text}` : redaction.text}</pre>}
+              {reviewEvidence && technicianText && <pre>{`${t.technicianNote}\n${technicianText}`}</pre>}
             </div>
 
             <div className="action-row">
-              <button className="secondary-button" type="button" onClick={prepare} disabled={preparation.state === "downloading"}>
+              <button className="secondary-button" type="button" onClick={prepare} disabled={busy || preparation.state === "downloading"}>
                 {preparation.state === "downloading" ? t.preparing : t.prepare}
               </button>
               <button className="primary-button" type="submit" disabled={busy || notes.trim().length < 12}>
-                {busy ? t.generating : t.generate}<span aria-hidden="true">→</span>
+                {busy ? t.generating : reviewEvidence ? technicianNote.trim() ? t.updateReport : t.checkEvidence : t.generate}<span aria-hidden="true">→</span>
               </button>
             </div>
             {error && <div className="error-banner" role="alert"><strong>{t.error}</strong><span>{error}</span></div>}
@@ -203,7 +248,7 @@ export default function App() {
 
         {result && <ReportView result={result} messages={t} />}
 
-        {result && (
+        {result && result.evidenceReview?.technicianNote !== "" && (
           <section className="nearby-panel">
             <div>
               <p className="section-kicker">Geoapify · optional</p>

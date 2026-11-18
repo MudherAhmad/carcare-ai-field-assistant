@@ -43,6 +43,13 @@ The production build was then deployed and checked at [carcare-ai-field-assistan
 - A fresh production request then reached Gemini but returned `429: Your prepayment credits are depleted`. Google AI Studio requires a positive Gemini API Prepay balance; the Google Cloud welcome credit cannot fund Gemini API usage for this new account.
 - The production UI now maps that provider response to a short, localised billing-credit message instead of exposing the provider endpoint and raw error details.
 - After an owner-authorised manual Prepay purchase with auto-reload disabled, a fresh production request rendered a complete inspection brief. The UI showed inference source `IN CLOUD`, model `gemini-3.5-flash-lite`, and 85% confidence for the synthetic braking-vibration sample.
+- On 2026-11-18, the owner ran the same fictional sample in Chrome on a second Windows computer using the deployed app. The resulting brief showed `ON DEVICE`, `Gemini Nano`, `Inspect soon`, and 60% model-reported confidence. See the [on-device verification record](ON_DEVICE_VERIFICATION.md).
+
+## Evidence review pilot
+
+The local Chrome build exercised the fictional passenger-seat case twice through live Firebase AI Logic. The first response asked what the technician observed about the fabric. The UI deferred service suggestions with the technician field blank. After the note described intact fabric and a superficial stain, the revised report displayed both sources and recommended upholstery cleaning based on the technician's observation. Both requests in the captured run displayed `IN CLOUD` and `gemini-3.5-flash-lite`.
+
+A separate run confirmed that the privacy preview redacts a fictional email in the technician note and that the revised report does not expose it. The Web production build and 14 tests passed. The Android debug APK built and six unit tests passed. A live Android run of this new flow remains pending.
 
 ## Android emulator verification
 
@@ -58,6 +65,12 @@ The debug APK was installed and launched on the local Android 16 / API 36.1 emul
 - App Check enforcement remained enabled throughout the verification.
 
 Clean screenshots of the verified Android states are stored in `demo/evidence/`.
+
+A separate continuous recording on 2026-11-18 captured the Android 16 / API 36.1 emulator's sample, privacy preview, fresh report request, and verified `In Cloud` result (`gemini-3.5-flash-lite`, `Inspect soon`, 85% confidence). The installed APK matched the local debug artifact. One earlier request returned a generic error before successful retries. AICore was absent on this emulator. The supplementary 1080p recording is saved locally as `demo/output/CarCare_Android_Emulator_Live_Test.mp4`.
+
+## Physical Android compatibility check
+
+The existing debug APK installed and opened on a Galaxy S8 (`SM-G950F`, Android 9, API 28) on 2026-11-18. The synthetic sample and privacy preview rendered. AICore was absent, and Firebase App Check rejected the live report request from this test installation. See [on-device verification](ON_DEVICE_VERIFICATION.md) for the remaining device test.
 
 ## Connected Firebase evidence
 
@@ -78,7 +91,7 @@ Client configuration, App Check debug tokens, Geoapify keys, signing keys, and p
 
 ## Remaining release evidence
 
-1. Capture an actual `ON_DEVICE` result on supported Chrome and Android hardware.
+1. Capture an actual `ON_DEVICE` result in the native Android app on supported hardware.
 2. Sign the Android release with the project owner's release key.
 
 ## Devpost submission evidence
@@ -88,6 +101,8 @@ On 2026-11-18, the owner completed the final submission action. The authenticate
 The owner published the demo at https://youtu.be/rlovigZkyo8 on 2026-11-18. YouTube's public oEmbed endpoint returned the title `CarCare AI Field Assistant Demo` and channel `Car care Sverige` (`@CarcareSverige`), confirming public embedding access. The separately prepared suggested title and description are not independently verified as saved on YouTube.
 
 The final local demo render is 2:48.80, 1920 x 1080 at 30 fps, H.264/AAC, with English narration and burned English captions. It completed a full decode verification. The 14,636,897-byte file has SHA-256 `35F90A8FB936A62BCD4D8E2E3D0F635E07556A9B5F107A1024C55088C557219A`. Generated media is ignored by Git; upload metadata is recorded in `demo/YOUTUBE_METADATA.md`.
+
+On 2026-11-18, the owner published the updated 2:21.51 demo at https://youtu.be/u5mh45_Y2dY. YouTube Studio confirmed publication. YouTube's public oEmbed endpoint returned `CarCare AI Field Assistant | Gemini Nano & Firebase AI Logic` from `Car care Sverige`. The updated demo shows the verified Chrome on-device run, the live cloud seat-mark workflow, and the native Android emulator cloud test.
 
 These are release gates, not simulated evidence. See `docs/CONTEST_COMPLIANCE.md` for the exact checklist.
 

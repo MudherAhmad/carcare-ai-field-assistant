@@ -1,37 +1,39 @@
 # YouTube upload metadata
 
-Published video: https://youtu.be/rlovigZkyo8
-
-Public oEmbed verification on 2026-11-18 returned the title `CarCare AI Field Assistant Demo` and channel `Car care Sverige`. The suggested metadata below is prepared copy; its saved state on YouTube is not independently verified.
+The [updated public demo](https://youtu.be/u5mh45_Y2dY) was published on November 18, 2026 from the verified 2:21.51 file `demo/output/CarCare_AI_Field_Assistant_Demo_Evidence_Review.mp4`. The [original demo](https://youtu.be/rlovigZkyo8) documents the first submission.
 
 ## Title
 
-CarCare AI Field Assistant | Firebase Hybrid AI Demo
+CarCare AI Field Assistant | Gemini Nano & Firebase AI Logic
 
 ## Description
 
-CarCare AI Field Assistant turns an Arabic, Swedish, or English vehicle note into a cautious, structured inspection brief. It redacts common identifiers locally, makes the inference source visible, and keeps the result within a decision-support boundary rather than presenting an AI response as a confirmed diagnosis.
+```text
+CarCare AI Field Assistant helps workshop teams turn Arabic, Swedish, and English vehicle notes into structured inspection briefs. It shows where each response ran and asks for a technician’s observation when more evidence is needed before suggesting a service.
 
-Built for Google #BuildHybridAI 2026 with React, TypeScript, native Android using Kotlin and Jetpack Compose, Firebase App Check, Firebase AI Logic, Gemini Nano on-device support, and a Gemini cloud fallback.
+This demo uses fictional vehicle notes. Chrome generated an inspection brief locally with Gemini Nano. The seat-mark example and the native Android emulator test used the Firebase AI Logic cloud fallback.
 
-Live app: https://carcare-ai-field-assistant.web.app
-Public source: https://github.com/MudherAhmad/carcare-ai-field-assistant
+00:00 CarCare AI Field Assistant
+00:16 Live Gemini Nano test in Chrome
+00:50 Web cloud fallback
+01:01 Seat-mark case and technician evidence
+01:38 Multilingual workflow
+01:48 Native Android emulator test
 
-The demo uses synthetic vehicle data. The verified live runs shown in this video used the Firebase AI Logic cloud fallback and display their actual inference source. The app prefers on-device inference on compatible Gemini Nano / AICore hardware; this video does not claim an ON_DEVICE result.
+Live app — https://carcare-ai-field-assistant.web.app
+Source code — https://github.com/MudherAhmad/carcare-ai-field-assistant
+Devpost — https://devpost.com/software/carcare-ai-field-assistant
 
-Decision support only — never a confirmed diagnosis or repair authorisation.
+Built for Google #BuildHybridAI 2026 by Mudher Ahmad, Car Care Sverige.
 
-Entrant: Mudher Ahmad
-Team: Car Care Sverige
-
-#BuildHybridAI #Firebase #Gemini #Android #AI
+#BuildHybridAI #FirebaseAILogic #GeminiNano
+```
 
 ## Upload settings
 
-- Channel: Car Care Sverige / @CarCareSverige
-- Visibility: Public
-- Audience: No, it is not made for kids
-- Language: English
-- Category: Science & Technology
-- Captions file: `demo/video-assets/subtitles.srt`
-- Local video: `demo/output/CarCare_AI_Field_Assistant_Demo.mp4`
+- Channel — Car care Sverige / @CarcareSverige
+- Visibility — Public
+- Audience — No, it’s not made for kids
+- Video language — English
+- Category — Science & Technology
+- Captions — English captions are already rendered into this export.

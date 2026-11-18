@@ -81,6 +81,12 @@ body::before {
 .input-panel textarea { min-height: 158px; resize: vertical; line-height: 1.55; }
 .notes-field { position: relative; }
 .notes-field small { position: absolute; inset-inline-end: 12px; bottom: 12px; padding: 3px 6px; color: #738078; background: rgba(247, 244, 236, 0.9); border-radius: 6px; font-size: 10px; }
+.evidence-controls .evidence-toggle { display: flex; align-items: center; gap: 9px; margin-bottom: 14px; }
+.input-panel .evidence-toggle input { width: 16px; height: 16px; margin: 0; accent-color: var(--ink); }
+.evidence-controls .text-button { margin-bottom: 14px; }
+.input-panel .technician-note { min-height: 98px; }
+.report-evidence > p { color: #4f605a; font-size: 14px; line-height: 1.5; }
+.evidence-text { white-space: pre-wrap; overflow-wrap: anywhere; }
 
 .privacy-preview { margin: 28px 0; padding: 20px; background: #e9f2ed; border: 1px solid rgba(42, 104, 83, 0.15); border-radius: 18px; }
 .privacy-title { display: flex; align-items: center; gap: 10px; font-size: 13px; }
@@ -117,6 +123,7 @@ body::before {
 .urgency-badge span, .source-chip span { display: block; margin-bottom: 6px; color: #7b817d; font-size: 9px; font-weight: 850; letter-spacing: 0.12em; text-transform: uppercase; }
 .urgency-badge strong { font-size: 15px; }
 .evidence-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin: 0 50px; overflow: hidden; background: var(--line); border: 1px solid var(--line); border-radius: 16px; }
+.evidence-row.pending-evidence { grid-template-columns: repeat(2, 1fr); }
 .source-chip { min-height: 72px; padding: 16px 18px; background: #f7f4ec; }
 .source-chip strong { font-size: 13px; }
 .source-on_device { background: #e8f3e8; }
@@ -194,7 +201,7 @@ footer { display: flex; justify-content: space-between; gap: 30px; margin-top: 7
   .report { border-radius: 22px; }
   .report-header, .report-section { padding-inline: 20px; }
   .report-header { padding-top: 30px; }
-  .evidence-row { margin-inline: 20px; grid-template-columns: 1fr; }
+  .evidence-row, .evidence-row.pending-evidence { margin-inline: 20px; grid-template-columns: 1fr; }
   .service-row { grid-template-columns: 1fr; }
   .report-disclaimer { margin-inline: 20px; }
   .nearby-panel { grid-template-columns: 1fr; padding: 24px 20px; }

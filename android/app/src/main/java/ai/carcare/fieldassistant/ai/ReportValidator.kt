@@ -9,7 +9,7 @@ object ReportValidator {
     private val safetyLevels = setOf("owner_safe", "professional_only")
     private val priorities = setOf("optional", "recommended", "priority", "immediate")
 
-    fun requireValid(report: InspectionReportPayload): InspectionReportPayload {
+    fun requireValid(report: InspectionReportPayload, evidenceReview: Boolean = false): InspectionReportPayload {
         require(report.schemaVersion == "1.0") { "Unsupported report schema." }
         require(report.language in languages) { "Unsupported report language." }
         require(report.summary.isNotBlank() && report.summary.length <= 600) { "Invalid summary." }
@@ -19,7 +19,7 @@ object ReportValidator {
         require(report.observations.all { it.system.isNotBlank() && it.symptom.isNotBlank() && it.severity in severities })
         require(report.inspectionSteps.size in 1..8)
         require(report.inspectionSteps.all { it.title.isNotBlank() && it.reason.isNotBlank() && it.safetyLevel in safetyLevels })
-        require(report.suggestedServices.size in 1..6)
+        require(report.suggestedServices.size <= 6 && (evidenceReview || report.suggestedServices.isNotEmpty()))
         require(report.suggestedServices.all { it.name.isNotBlank() && it.reason.isNotBlank() && it.priority in priorities })
         require(report.safetyNotices.size <= 5 && report.followUpQuestions.size <= 5)
         return report

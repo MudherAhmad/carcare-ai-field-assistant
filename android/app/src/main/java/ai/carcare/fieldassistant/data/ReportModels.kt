@@ -58,7 +58,7 @@ data class InspectionReportPayload(
     val observations: List<ObservationPayload>,
     @Guide(minItems = 1, maxItems = 8)
     val inspectionSteps: List<InspectionStepPayload>,
-    @Guide(minItems = 1, maxItems = 6)
+    @Guide(maxItems = 6)
     val suggestedServices: List<SuggestedServicePayload>,
     @Guide(maxItems = 5)
     val safetyNotices: List<String>,
@@ -73,10 +73,14 @@ data class VehicleInput(
     val vehicle: String,
     val mileageKm: Int?,
     val notes: String,
+    val redactedTechnicianNote: String? = null,
 )
+
+data class EvidenceReview(val intake: String, val technicianNote: String)
 
 data class EngineResult(
     val report: InspectionReportPayload,
     val source: String,
     val modelName: String,
+    val evidenceReview: EvidenceReview? = null,
 )

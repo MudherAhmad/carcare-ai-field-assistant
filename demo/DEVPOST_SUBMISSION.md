@@ -6,13 +6,13 @@
 - Devpost project: **https://devpost.com/software/carcare-ai-field-assistant**
 - Live demo: **https://carcare-ai-field-assistant.web.app**
 - Public source: **https://github.com/MudherAhmad/carcare-ai-field-assistant**
-- Public demo video: **https://youtu.be/rlovigZkyo8**
+- Updated public demo video: **https://youtu.be/u5mh45_Y2dY**
 - Video channel: **Car care Sverige / @CarcareSverige**
 - Tagline: **Turn multilingual vehicle notes into cautious inspection briefs with visible on-device and cloud AI routing.**
 - Platforms: **Web/Chrome and Android**
 - Built with: **React, TypeScript, Kotlin, Jetpack Compose, Firebase AI Logic, Firebase App Check, Firebase Hosting, Gemini, Gemini Nano, Geoapify, Vite, Vitest**
 
-The demonstrated live runs used cloud inference. On-device routing is implemented, but an actual ON_DEVICE result has not yet been captured on supported hardware.
+The deployed web app generated a live inspection brief in Chrome on Windows with `ON DEVICE` and `Gemini Nano` visible in the report. Separate Web and native Android tests verified `IN_CLOUD` results. The updated 2:21 demo also shows the fictional seat-mark example from the live cloud test of the evidence-review build.
 
 ## Inspiration
 
@@ -21,6 +21,8 @@ The first description of a vehicle problem is usually unstructured: a vibration,
 ## What it does
 
 CarCare AI Field Assistant accepts Arabic, Swedish, or English vehicle notes and produces a structured brief with urgency, observations, inspection steps, suggested services, safety notices, and follow-up questions. It redacts common identifiers locally, shows the redacted prompt, and reports whether Firebase AI Logic used on-device or cloud inference. An optional Geoapify action finds nearby car-repair services without sharing the note or report.
+
+In the evidence-review workflow, CarCare records the customer's request and the technician's observation separately. In the tested seat-mark example, it deferred service suggestions while the technician field was blank. Once the technician reported intact fabric and a superficial stain, the revised brief recommended upholstery cleaning and showed the observation that supported that suggestion.
 
 ## How we built it
 
@@ -36,8 +38,10 @@ Hybrid inference is not just a network fallback. On-device availability, model d
 - Visible, evidence-based inference routing.
 - A privacy boundary that shows what may reach the model.
 - Safety constraints that prevent the UI from presenting an AI guess as a confirmed diagnosis.
+- A verified live `ON_DEVICE` brief from the deployed Web app in Chrome using Gemini Nano.
 - A verified live `IN_CLOUD` inspection brief from the deployed Firebase Hosting site.
 - A verified live `IN_CLOUD` inspection brief from the native Android app with App Check enforcement enabled.
+- A live Web evidence-review test that deferred a recommendation, asked for a technician observation, and revised the recommendation when the observation was added.
 - A clean public repository with synthetic data and automated secret checks.
 
 ## What we learned
@@ -46,4 +50,4 @@ The strongest hybrid AI design gives each execution path a clear product role. O
 
 ## What's next
 
-We would add opt-in photo evidence, OBD data import with explicit provenance, human mechanic review, more on-device language validation, and accessibility testing with field technicians. We would keep report persistence opt-in and separate from inference.
+For a future fleet pilot, we plan to help drivers document vehicle defects before a shift. A driver could photograph a defect and dictate a note in Arabic or Swedish. CarCare would ask for clarification when a technical term is ambiguous, mask faces and license plates on the device, and let the driver review the edited image and transcript before sending the report to the maintenance team. We would measure how long reporting takes and how often maintenance staff need to request additional information.

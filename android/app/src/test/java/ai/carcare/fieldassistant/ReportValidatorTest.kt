@@ -23,6 +23,13 @@ class ReportValidatorTest {
     }
 
     @Test
+    fun evidenceReviewCanDeferServiceRecommendations() {
+        val deferred = report().copy(suggestedServices = emptyList())
+        ReportValidator.requireValid(deferred, evidenceReview = true)
+        assertThrows(IllegalArgumentException::class.java) { ReportValidator.requireValid(deferred) }
+    }
+
+    @Test
     fun rejectsUnsupportedUrgency() {
         assertThrows(IllegalArgumentException::class.java) {
             ReportValidator.requireValid(report("maybe"))

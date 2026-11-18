@@ -41,7 +41,7 @@ class FirebaseHybridReportEngine : HybridReportEngine {
             ?: error("Firebase AI Logic returned no structured report.")
         val source = generated.response.inferenceSource.toString()
         return EngineResult(
-            report = ReportValidator.requireValid(report),
+            report = ReportValidator.requireValid(report, evidenceReview = input.redactedTechnicianNote != null),
             source = source,
             modelName = if (source == "ON_DEVICE") "Gemini Nano 4 Fast" else BuildConfig.FIREBASE_CLOUD_MODEL,
         )
