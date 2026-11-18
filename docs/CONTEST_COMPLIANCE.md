@@ -11,7 +11,7 @@ Official deadline: **November 30, 2026 at 2:00 PM Pacific Time** (23:00 Europe/S
 | Platform | Chrome Web and native Android | Implemented |
 | Working demo | Synthetic, labelled UI mode plus live configuration path | Deployed at `https://carcare-ai-field-assistant.web.app`; live `IN_CLOUD` result verified through Firebase AI Logic |
 | Public source | Clean standalone MIT repository | Published at `https://github.com/MudherAhmad/carcare-ai-field-assistant` |
-| Video | English narration, verified Web and Android evidence, burned English captions, max 3 minutes | Updated 2:21 demo published at https://youtu.be/u5mh45_Y2dY; public YouTube oEmbed response verified on 2026-11-18 |
+| Video | English narration, verified Web and Android evidence, burned English captions, max 3 minutes | 2:47 judging video published at https://youtu.be/Dzse1eAPEL8. Public YouTube embedding and the saved Devpost video field were verified on 2026-11-18. |
 | Written submission | Devpost copy in `demo/DEVPOST_SUBMISSION.md` | Submitted on 2026-11-18 at https://devpost.com/software/carcare-ai-field-assistant |
 
 - Entrant: **Mudher Ahmad**

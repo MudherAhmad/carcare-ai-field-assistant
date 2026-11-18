@@ -122,6 +122,8 @@ On 2026-11-18, the owner published the updated 2:21.51 demo at https://youtu.be/
 
 The owner saved the updated story and judging video in Devpost submission `1310126`. Reopening that submission's Project details form confirmed `SUBMITTED`, the saved video URL `https://youtu.be/u5mh45_Y2dY`, the Chrome on-device evidence, the seat-mark workflow, and the description of a future fleet pilot.
 
+The owner then published the 2:47 workshop-context cut at https://youtu.be/Dzse1eAPEL8. It adds the transmission-service story and two cropped screens from the existing Car Care Sverige platform. YouTube Studio showed the new video as Public, and YouTube's public oEmbed endpoint returned a response from the Car care Sverige channel. Reopening Project details confirmed the new URL in the saved Demo video URL field and `SUBMITTED` status.
+
 Reopening the submission's Additional info form confirmed the saved technology answer and judge testing instructions. They reference the verified Chrome `ON DEVICE` result, the updated video, and the steps for both the regular report and the seat-mark evidence review.
 
 These are release gates, not simulated evidence. See `docs/CONTEST_COMPLIANCE.md` for the exact checklist.

@@ -6,7 +6,7 @@ Built for **Google #BuildHybridAI 2026** with Firebase AI Logic.
 
 **Live web app:** [carcare-ai-field-assistant.web.app](https://carcare-ai-field-assistant.web.app)
 
-**Demo video:** [Watch the Web, evidence review, and Android demo on YouTube](https://youtu.be/u5mh45_Y2dY)
+**Demo video:** [Watch the workshop context, Web evidence review, and Android demo on YouTube](https://youtu.be/Dzse1eAPEL8)
 
 **Devpost submission:** [CarCare AI Field Assistant](https://devpost.com/software/carcare-ai-field-assistant) — submitted to #BuildHybridAI 2026 on November 18, 2026.
 
