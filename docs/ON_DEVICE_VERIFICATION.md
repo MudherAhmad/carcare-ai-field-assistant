@@ -14,6 +14,12 @@
 - An interactive Chrome 157 session on the same Windows workstation also returned `unavailable`. On the deployed app, **Prepare hybrid AI** confirmed that only the cloud fallback was available. ADB listed no connected Android device at the time of this retry.
 - Both browser availability checks above describe sessions on the original workstation.
 
+## Seat-mark evidence review in Chrome
+
+On 2026-11-18, the owner ran the fictional seat-mark example on the second Windows computer with evidence review enabled. The [updated report screenshot](../demo/evidence/chrome-seat-evidence-review-on-device.png) shows `ON DEVICE`, `Gemini Nano`, the customer's request to replace the seat, and the technician's separate observation that the fabric was intact and the stain was superficial. The local report asked for more detail and suggested a visual inspection. It left service recommendations empty.
+
+An earlier local request with a different intake note also showed `ON DEVICE` and deferred service recommendations while waiting for a technician observation. The upholstery-cleaning recommendation shown in the judging video came from the separate live cloud run documented in [Verification](VERIFICATION.md#evidence-review-pilot).
+
 ## Prerequisites
 
 For Android, identify the actual phone model and check it against the [ML Kit supported-device documentation](https://developers.google.com/ml-kit/genai). Preview model use can require AICore developer-preview enrollment; follow the [Firebase Android guide](https://firebase.google.com/docs/ai-logic/hybrid/android/get-started) and [model configuration guide](https://firebase.google.com/docs/ai-logic/hybrid/android/configuration-options).

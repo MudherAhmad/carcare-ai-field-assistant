@@ -10,7 +10,7 @@ Built for **Google #BuildHybridAI 2026** with Firebase AI Logic.
 
 **Devpost submission:** [CarCare AI Field Assistant](https://devpost.com/software/carcare-ai-field-assistant) — submitted to #BuildHybridAI 2026 on November 18, 2026.
 
-The hosted app has a verified `ON_DEVICE` result in Chrome using Gemini Nano. Native Android has a verified cloud result. See the [verification record](docs/ON_DEVICE_VERIFICATION.md) and the prepared [Devpost cover and gallery images](demo/media/README.md).
+The hosted app has verified `ON_DEVICE` results in Chrome for a general inspection brief and [the seat-mark evidence review](docs/ON_DEVICE_VERIFICATION.md#seat-mark-evidence-review-in-chrome). Native Android has a verified cloud result. See the [verification record](docs/ON_DEVICE_VERIFICATION.md) and the prepared [Devpost cover and gallery images](demo/media/README.md).
 
 <p align="center">
   <img src="demo/evidence/android-home.png" alt="Android home screen with Firebase AI Logic ready" width="260" />
