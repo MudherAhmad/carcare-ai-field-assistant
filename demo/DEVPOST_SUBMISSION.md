@@ -4,7 +4,13 @@
 - Team: **Car Care Sverige**
 - Live demo: **https://carcare-ai-field-assistant.web.app**
 - Public source: **https://github.com/MudherAhmad/carcare-ai-field-assistant**
-- Video channel: **Car Care Sverige / @CarCareSverige** (final video URL pending)
+- Public demo video: **https://youtu.be/rlovigZkyo8**
+- Video channel: **Car care Sverige / @CarcareSverige**
+- Tagline: **Turn multilingual vehicle notes into cautious inspection briefs with visible on-device and cloud AI routing.**
+- Platforms: **Web/Chrome and Android**
+- Built with: **React, TypeScript, Kotlin, Jetpack Compose, Firebase AI Logic, Firebase App Check, Firebase Hosting, Gemini, Gemini Nano, Geoapify, Vite, Vitest**
+
+The demonstrated live runs used cloud inference. On-device routing is implemented, but an actual ON_DEVICE result has not yet been captured on supported hardware.
 
 ## Inspiration
 

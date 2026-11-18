@@ -80,7 +80,9 @@ Client configuration, App Check debug tokens, Geoapify keys, signing keys, and p
 
 1. Capture an actual `ON_DEVICE` result on supported Chrome and Android hardware.
 2. Sign the Android release with the project owner's release key.
-3. Upload the verified final demo to YouTube and submit through the entrant's Devpost account.
+3. Submit the project through the entrant's Devpost account. The browser currently requires the owner to sign in and register for the hackathon.
+
+The owner published the demo at https://youtu.be/rlovigZkyo8 on 2026-11-18. YouTube's public oEmbed endpoint returned the title `CarCare AI Field Assistant Demo` and channel `Car care Sverige` (`@CarcareSverige`), confirming public embedding access. The separately prepared suggested title and description are not independently verified as saved on YouTube.
 
 The final local demo render is 2:48.80, 1920 x 1080 at 30 fps, H.264/AAC, with English narration and burned English captions. It completed a full decode verification. The 14,636,897-byte file has SHA-256 `35F90A8FB936A62BCD4D8E2E3D0F635E07556A9B5F107A1024C55088C557219A`. Generated media is ignored by Git; upload metadata is recorded in `demo/YOUTUBE_METADATA.md`.
 

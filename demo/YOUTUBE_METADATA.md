@@ -1,5 +1,9 @@
 # YouTube upload metadata
 
+Published video: https://youtu.be/rlovigZkyo8
+
+Public oEmbed verification on 2026-11-18 returned the title `CarCare AI Field Assistant Demo` and channel `Car care Sverige`. The suggested metadata below is prepared copy; its saved state on YouTube is not independently verified.
+
 ## Title
 
 CarCare AI Field Assistant | Firebase Hybrid AI Demo

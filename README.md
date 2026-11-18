@@ -6,6 +6,8 @@ Built for **Google #BuildHybridAI 2026** with Firebase AI Logic.
 
 **Live web app:** [carcare-ai-field-assistant.web.app](https://carcare-ai-field-assistant.web.app)
 
+**Demo video:** [Watch the Web and Android demo on YouTube](https://youtu.be/rlovigZkyo8)
+
 <p align="center">
   <img src="demo/evidence/android-home.png" alt="Android home screen with Firebase AI Logic ready" width="260" />
   <img src="demo/evidence/android-preview.png" alt="Android synthetic vehicle note and privacy preview" width="260" />
