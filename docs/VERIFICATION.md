@@ -80,7 +80,10 @@ Client configuration, App Check debug tokens, Geoapify keys, signing keys, and p
 
 1. Capture an actual `ON_DEVICE` result on supported Chrome and Android hardware.
 2. Sign the Android release with the project owner's release key.
-3. Submit the project through the entrant's Devpost account. The browser currently requires the owner to sign in and register for the hackathon.
+
+## Devpost submission evidence
+
+On 2026-11-18, the owner completed the final submission action. The authenticated Devpost project page at https://devpost.com/software/carcare-ai-field-assistant displayed `Project submitted!` and `SUBMITTED TO #BuildHybridAI 2026`; the earlier `INCOMPLETE SUBMISSION` status was gone. The saved page listed Mudher Ahmad, the complete project story and technology tags, working app/source links, an embedded YouTube video, and the explicit ON_DEVICE verification limitation. Submission ID: `1310126`.
 
 The owner published the demo at https://youtu.be/rlovigZkyo8 on 2026-11-18. YouTube's public oEmbed endpoint returned the title `CarCare AI Field Assistant Demo` and channel `Car care Sverige` (`@CarcareSverige`), confirming public embedding access. The separately prepared suggested title and description are not independently verified as saved on YouTube.
 

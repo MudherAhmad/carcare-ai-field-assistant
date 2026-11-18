@@ -12,7 +12,7 @@ Official deadline: **November 30, 2026 at 2:00 PM Pacific Time** (23:00 Europe/S
 | Working demo | Synthetic, labelled UI mode plus live configuration path | Deployed at `https://carcare-ai-field-assistant.web.app`; live `IN_CLOUD` result verified through Firebase AI Logic |
 | Public source | Clean standalone MIT repository | Published at `https://github.com/MudherAhmad/carcare-ai-field-assistant` |
 | Video | English narration, verified Web and Android evidence, burned English captions, max 3 minutes | Published at https://youtu.be/rlovigZkyo8; public YouTube oEmbed response verified on 2026-11-18 |
-| Written submission | Devpost copy in `demo/DEVPOST_SUBMISSION.md` | Prepared |
+| Written submission | Devpost copy in `demo/DEVPOST_SUBMISSION.md` | Submitted on 2026-11-18 at https://devpost.com/software/carcare-ai-field-assistant |
 
 - Entrant: **Mudher Ahmad**
 - Team / public channel: **Car Care Sverige**
@@ -30,4 +30,6 @@ Official deadline: **November 30, 2026 at 2:00 PM Pacific Time** (23:00 Europe/S
 - [x] Publish the source repository and run the clean-room safety scan on the published commit.
 - [x] Produce and verify an English demo of no more than 3 minutes.
 - [x] Upload the video publicly to YouTube with burned English subtitles.
-- [ ] Complete Devpost team membership and submission fields before the deadline.
+- [x] Complete Devpost team membership and submission fields before the deadline.
+
+Devpost displayed `Project submitted!` and `SUBMITTED TO #BuildHybridAI 2026` on 2026-11-18. The project lists Mudher Ahmad as its creator and embeds the published YouTube video. Submission completion does not establish an actual ON_DEVICE run or a signed Android release; those remain separately documented verification gaps.

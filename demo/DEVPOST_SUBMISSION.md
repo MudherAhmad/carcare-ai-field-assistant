@@ -2,6 +2,8 @@
 
 - Entrant: **Mudher Ahmad**
 - Team: **Car Care Sverige**
+- Submission status: **Submitted to #BuildHybridAI 2026 on 2026-11-18**
+- Devpost project: **https://devpost.com/software/carcare-ai-field-assistant**
 - Live demo: **https://carcare-ai-field-assistant.web.app**
 - Public source: **https://github.com/MudherAhmad/carcare-ai-field-assistant**
 - Public demo video: **https://youtu.be/rlovigZkyo8**

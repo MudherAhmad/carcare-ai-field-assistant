@@ -8,6 +8,8 @@ Built for **Google #BuildHybridAI 2026** with Firebase AI Logic.
 
 **Demo video:** [Watch the Web and Android demo on YouTube](https://youtu.be/rlovigZkyo8)
 
+**Devpost submission:** [CarCare AI Field Assistant](https://devpost.com/software/carcare-ai-field-assistant) — submitted to #BuildHybridAI 2026 on November 18, 2026.
+
 <p align="center">
   <img src="demo/evidence/android-home.png" alt="Android home screen with Firebase AI Logic ready" width="260" />
   <img src="demo/evidence/android-preview.png" alt="Android synthetic vehicle note and privacy preview" width="260" />
