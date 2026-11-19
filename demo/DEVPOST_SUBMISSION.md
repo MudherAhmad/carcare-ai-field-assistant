@@ -6,13 +6,13 @@
 - Devpost project: **https://devpost.com/software/carcare-ai-field-assistant**
 - Live demo: **https://carcare-ai-field-assistant.web.app**
 - Public source: **https://github.com/MudherAhmad/carcare-ai-field-assistant**
-- Public judging video: **https://youtu.be/Dzse1eAPEL8**
+- Public judging video: **https://youtu.be/Xzp_eaj-8P4**
 - Video channel: **Car care Sverige / @CarcareSverige**
 - Tagline: **Turn multilingual vehicle notes into cautious inspection briefs with visible on-device and cloud AI routing.**
 - Platforms: **Web/Chrome and Android**
 - Built with: **React, TypeScript, Kotlin, Jetpack Compose, Firebase AI Logic, Firebase App Check, Firebase Hosting, Gemini, Gemini Nano, Geoapify, Vite, Vitest**
 
-The deployed web app generated live inspection briefs in Chrome on Windows with `ON DEVICE` and `Gemini Nano` visible in the report. Separate Web and native Android tests verified `IN_CLOUD` results. The currently linked judging video runs 2:47.
+The deployed web app generated live inspection briefs in Chrome on Windows with `ON DEVICE` and `Gemini Nano` visible in the report. Separate Web and native Android tests verified `IN_CLOUD` results. The public judging video runs about 1 minute 51 seconds and includes both stages of the workshop seat case.
 
 ## Inspiration
 
