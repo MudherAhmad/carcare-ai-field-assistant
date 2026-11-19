@@ -18,7 +18,7 @@ The hosted app has verified `ON_DEVICE` results in Chrome for a general inspecti
 2. Leave the technician note empty and select **Check what evidence is missing**. The report asks for a technician observation and defers service suggestions.
 3. Add `The fabric is intact. The mark is a surface stain on the passenger seat cushion, with no visible tears.` and select **Update report with evidence**. Check how the report distinguishes the intake from the technician's observation. Read the inference source displayed on each report.
 
-The [workshop walkthrough](docs/ON_DEVICE_VERIFICATION.md#workshop-seat-inspection-in-chrome) shows both stages on the same real seat case using anonymized notes.
+The [workshop walkthrough](docs/ON_DEVICE_VERIFICATION.md#workshop-seat-inspection-in-chrome) shows both stages on the same real seat case using anonymized notes. The [workshop report](docs/FIELD_PILOT.md#workshop-walkthrough-results) records the operator's estimates, the test quote and the measurement limits.
 
 <p align="center">
   <img src="demo/evidence/android-home.png" alt="Android home screen with Firebase AI Logic ready" width="260" />

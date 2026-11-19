@@ -30,6 +30,8 @@ In the evidence-review workflow, CarCare records the customer's request and the 
 
 In a real-workshop walkthrough using a test booking, desktop Chrome ran both stages locally via Gemini Nano. The first report deferred service suggestions. After the technician entered that the fabric was intact and the mark was a surface stain, the updated local report suggested a visual check and a follow-up question. The workshop separately entered a spot-cleaning test proposal for customer review. In a separate cloud example, Gemini recommended upholstery cleaning after reviewing the technician observation. [Workshop evidence](../docs/ON_DEVICE_VERIFICATION.md#workshop-seat-inspection-in-chrome)
 
+The operator estimated about one minute for both AI passes and about 90 seconds for manual report entry without photo handling. These estimates cover different steps. A matched comparison of the full workflow and an independent quality review remain to be measured. [Workshop results](../docs/FIELD_PILOT.md#workshop-walkthrough-results)
+
 Judges can [open evidence review directly](https://carcare-ai-field-assistant.web.app/?review=quote&lang=en) and load the seat-mark example. This entry opens a blank review without a booking identifier or any customer data. Staff decide what reasoning belongs in a proposal after reviewing the brief.
 
 ## How we built it
