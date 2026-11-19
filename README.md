@@ -1,6 +1,6 @@
 # CarCare AI Field Assistant
 
-CarCare AI Field Assistant turns a driver's or technician's free-form vehicle notes into a cautious, structured inspection brief. It runs on the web and Android, supports Arabic, Swedish, and English, and makes the hybrid inference boundary visible instead of hiding it.
+CarCare AI Field Assistant helps workshop staff decide what to check before proposing extra work. It previews locally masked text, separates the intake note from the technician's observation, and turns those notes into a structured inspection brief. The Web and native Android apps support Arabic, Swedish, and English.
 
 Built for **Google #BuildHybridAI 2026** with Firebase AI Logic.
 
@@ -28,13 +28,17 @@ The [workshop walkthrough](docs/ON_DEVICE_VERIFICATION.md#workshop-seat-inspecti
 
 ## Why hybrid AI belongs in the field
 
-Vehicle notes are often captured in a noisy garage, at the roadside, or somewhere with unreliable connectivity. A short, privacy-sensitive first pass is well suited to Gemini Nano on the device. Firebase AI Logic can then fall back to a cloud Gemini model when the device model is unavailable or the request needs more capacity.
+Workshops can use the same evidence-review workflow on a compatible workstation or a device without a local model. The app uses Firebase AI Logic [`PREFER_ON_DEVICE`](https://firebase.google.com/docs/ai-logic/hybrid/web/get-started#step_5_initialize_the_service_and_create_a_model_instance).
+
+| Route | When it runs | Verified in this project |
+| --- | --- | --- |
+| `ON DEVICE` | Gemini Nano handles the request locally when the device can run it. On desktop Chrome, the installed model can run without sending the prompt to a cloud model. | Both stages of the [workshop seat case in Chrome](docs/ON_DEVICE_VERIFICATION.md#workshop-seat-inspection-in-chrome). |
+| `IN CLOUD` | Firebase AI Logic falls back to a cloud Gemini model when the request cannot run locally. The fallback keeps the workflow usable on devices without a ready local model, when connected. | [Web and native Android cloud runs](docs/VERIFICATION.md). |
+
+The report shows the source returned by the SDK. Both routes use the same report schema and evidence-review workflow. Before inference, **Privacy preview** shows the text after common identifiers have been masked on the device. The initial review in evidence mode withholds service suggestions until a technician observation is supplied. Workshop staff review the result and decide what belongs in a price proposal.
 
 The app:
 
-- redacts common phone, email, and vehicle-registration patterns before inference;
-- uses Firebase AI Logic `PREFER_ON_DEVICE` for a single-turn structured report;
-- displays whether the result came from `ON_DEVICE` or `IN_CLOUD` inference;
 - never claims a confirmed diagnosis, price, sensor reading, or completed repair;
 - provides an optional Geoapify workshop lookup that is separate from AI inference;
 - includes a clearly labelled synthetic demo path for UI review without credentials.

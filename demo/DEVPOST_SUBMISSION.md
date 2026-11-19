@@ -12,7 +12,7 @@
 - Platforms: **Web/Chrome and Android**
 - Built with: **React, TypeScript, Kotlin, Jetpack Compose, Firebase AI Logic, Firebase App Check, Firebase Hosting, Gemini, Gemini Nano, Geoapify, Vite, Vitest**
 
-The deployed web app generated live inspection briefs in Chrome on Windows with `ON DEVICE` and `Gemini Nano` visible in the report. Separate Web and native Android tests verified `IN_CLOUD` results. The public judging video runs about 1 minute 51 seconds and includes both stages of the workshop seat case.
+CarCare AI Field Assistant helps workshop staff identify what to check before proposing extra work. It previews locally masked text, separates customer and technician notes, and shows which AI route produced the brief. The judging video shows both stages of a real workshop case using Gemini Nano on desktop Chrome, plus separate Web and native Android cloud runs.
 
 ## Inspiration
 
@@ -37,6 +37,10 @@ Judges can [open evidence review directly](https://carcare-ai-field-assistant.we
 ## How we built it
 
 The Web app uses React, TypeScript, Firebase App Check, and the Firebase AI Logic Web SDK. The native Android app uses Kotlin, Jetpack Compose, Firebase App Check, `firebase-ai`, and `firebase-ai-ondevice`. Both prefer Gemini Nano for a short single-turn structured task and use a cloud Gemini fallback through Firebase AI Logic. They share the same public report schema, prompt constraints, urgency vocabulary, and synthetic acceptance cases.
+
+## Why hybrid
+
+Firebase AI Logic prefers Gemini Nano when the device can run the request locally. When it cannot, the cloud fallback lets the technician keep using the same review workflow on a connected device. The app masks common text identifiers locally before either path and shows the source that actually handled each brief. We verified local execution in desktop Chrome and cloud execution on Web and native Android. [On-device evidence](../docs/ON_DEVICE_VERIFICATION.md#workshop-seat-inspection-in-chrome)
 
 ## Challenges we ran into
 
