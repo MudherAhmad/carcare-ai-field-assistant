@@ -255,12 +255,9 @@ export default function App() {
             {error && <div className="error-banner" role="alert"><strong>{t.error}</strong><span>{error}</span></div>}
           </form>
 
-          <aside className="process-rail" aria-label="Hybrid inference flow">
-            <div><span>1</span><strong>Local redaction</strong><small>On this device</small></div>
-            <i />
-            <div><span>2</span><strong>Firebase AI Logic</strong><small>App Check protected</small></div>
-            <i />
-            <div><span>3</span><strong>Gemini Nano ↔ Cloud</strong><small>Visible routing evidence</small></div>
+          <aside className="process-rail" aria-label={t.processing}>
+            <div><strong>{t.redactionTitle}</strong><small>{t.localRedactionInfo}</small></div>
+            <div><strong>Firebase AI Logic</strong><small>{t.inferenceInfo}</small></div>
           </aside>
         </section>
 
