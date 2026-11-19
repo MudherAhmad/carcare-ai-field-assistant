@@ -12,7 +12,7 @@
 - Platforms: **Web/Chrome and Android**
 - Built with: **React, TypeScript, Kotlin, Jetpack Compose, Firebase AI Logic, Firebase App Check, Firebase Hosting, Gemini, Gemini Nano, Geoapify, Vite, Vitest**
 
-The deployed web app generated a live inspection brief in Chrome on Windows with `ON DEVICE` and `Gemini Nano` visible in the report. Separate Web and native Android tests verified `IN_CLOUD` results. The 2:47 judging video adds the real transmission-service story and screens from the existing workshop platform to the verified AI demonstrations, including the fictional seat-mark example.
+The deployed web app generated live inspection briefs in Chrome on Windows with `ON DEVICE` and `Gemini Nano` visible in the report. Separate Web and native Android tests verified `IN_CLOUD` results. The currently linked judging video runs 2:47.
 
 ## Inspiration
 
@@ -20,13 +20,15 @@ The first description of a vehicle problem is usually unstructured: a vibration,
 
 During my own automatic transmission service, an extra flush was proposed after the initial estimate. I wanted to understand what the technician had observed, why the extra work was recommended, and what I was being asked to approve. That experience led to a question we built around. What evidence should a workshop have before it proposes extra work?
 
-Our existing Car Care Sverige platform already supports booking, vehicle intake, inspection photos, and itemized proposals that customers can review. For the hackathon we built CarCare AI Field Assistant, which uses Firebase AI Logic to review workshop notes and ask for missing evidence before a service is suggested. The seat-mark case in the judging demo illustrates that new evidence review with sample data. The existing platform explains where the resulting reasoning can be useful in day-to-day workshop work.
+Our existing Car Care Sverige platform already supports booking, vehicle intake, inspection photos, and itemized proposals that customers can review. During the hackathon we built the standalone CarCare AI Field Assistant, including the hybrid Firebase AI Logic inference, privacy preview, structured brief and evidence-review flow. The existing platform shows where this review fits into the workflow. Staff review the AI brief and carry their own reasoning into a proposal.
 
 ## What it does
 
 CarCare AI Field Assistant accepts Arabic, Swedish, or English vehicle notes and produces a structured brief with urgency, observations, inspection steps, suggested services, safety notices, and follow-up questions. It redacts common identifiers locally, shows the redacted prompt, and reports whether Firebase AI Logic used on-device or cloud inference. An optional Geoapify action finds nearby car-repair services without sharing the note or report.
 
-In the evidence-review workflow, CarCare records the customer's request and the technician's observation separately. In the tested seat-mark example, it deferred service suggestions while the technician field was blank. Once the technician reported intact fabric and a superficial stain, the revised brief recommended upholstery cleaning and showed the observation that supported that suggestion.
+In the evidence-review workflow, CarCare records the customer's request and the technician's observation separately. An initial review asks for the observation that would help a technician decide on the next step. The updated brief shows the evidence supplied for review.
+
+In a real-workshop walkthrough using a test booking, desktop Chrome ran both stages locally via Gemini Nano. The first report deferred service suggestions. After the technician entered that the fabric was intact and the mark was a surface stain, the updated local report suggested a visual check and a follow-up question. The workshop separately entered a spot-cleaning test proposal for customer review. In a separate cloud example, Gemini recommended upholstery cleaning after reviewing the technician observation. [Workshop evidence](../docs/ON_DEVICE_VERIFICATION.md#workshop-seat-inspection-in-chrome)
 
 Judges can [open evidence review directly](https://carcare-ai-field-assistant.web.app/?review=quote&lang=en) and load the seat-mark example. This entry opens a blank review without a booking identifier or any customer data. Staff decide what reasoning belongs in a proposal after reviewing the brief.
 

@@ -9,6 +9,7 @@ object PromptFactory {
     fun create(input: VehicleInput, redactedNotes: String): String {
         val language = languageNames[input.language] ?: "English"
         val mileage = input.mileageKm?.let { "$it km" } ?: "not provided"
+        val vehicle = Redactor.redact(input.vehicle).text
         val prompt = """
             You are a cautious vehicle field-inspection assistant.
 
@@ -24,7 +25,7 @@ object PromptFactory {
             - Keep every text field concise and fully in $language.
             - schemaVersion must be 1.0 and language must be ${input.language}.
 
-            Vehicle: ${input.vehicle.ifBlank { "not provided" }}
+            Vehicle: ${JsonPrimitive(vehicle.ifBlank { "not provided" })}
             Mileage: $mileage
         """.trimIndent()
         val review = input.redactedTechnicianNote

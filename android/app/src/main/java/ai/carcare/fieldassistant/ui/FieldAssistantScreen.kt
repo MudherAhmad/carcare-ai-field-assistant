@@ -1,5 +1,7 @@
 package ai.carcare.fieldassistant.ui
 
+import ai.carcare.fieldassistant.ai.Redactor
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -180,13 +182,15 @@ private fun InputCard(
                 }
             }
 
-            val redactionCount = intake.count + if (state.reviewEvidence) technician.count else 0
+            val vehicle = Redactor.redact(state.vehicle)
+            val redactionCount = vehicle.count + intake.count + if (state.reviewEvidence) technician.count else 0
             Column(
                 modifier = Modifier.fillMaxWidth().background(Color(0xFFE8F2ED), RoundedCornerShape(18.dp)).padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(9.dp),
             ) {
                 Text("✓  ${t.privacy}", color = Ink, fontWeight = FontWeight.Bold, fontSize = 13.sp)
                 Text(if (redactionCount > 0) "$redactionCount ${t.identifiers}" else t.noIdentifiers, color = Ink.copy(alpha = 0.64f), fontSize = 11.sp, lineHeight = 16.sp)
+                if (vehicle.text.isNotBlank()) PrivacyText("${t.vehicle}\n${vehicle.text}")
                 if (state.notes.isNotBlank()) {
                     PrivacyText(if (state.reviewEvidence) "${t.intakeNote}\n${intake.text}" else intake.text)
                 }

@@ -63,10 +63,11 @@ export default function App() {
   const [locationBusy, setLocationBusy] = useState(false);
   const [locationError, setLocationError] = useState("");
   const t = getMessages(locale);
+  const vehicleRedaction = useMemo(() => redactSensitiveText(vehicle, { vehicleDescription: true }), [vehicle]);
   const redaction = useMemo(() => redactSensitiveText(notes), [notes]);
   const technicianRedaction = useMemo(() => redactSensitiveText(technicianNote), [technicianNote]);
   const technicianText = technicianRedaction.text.trim().slice(0, 1000);
-  const identifierCount = redaction.total + (reviewEvidence ? technicianRedaction.total : 0);
+  const identifierCount = vehicleRedaction.total + redaction.total + (reviewEvidence ? technicianRedaction.total : 0);
   const direction = locale === "ar" ? "rtl" : "ltr";
 
   function changeLocale(next: Locale) {
@@ -238,6 +239,7 @@ export default function App() {
             <div className="privacy-preview">
               <div className="privacy-title"><span className="shield">✓</span><strong>{t.redactionTitle}</strong></div>
               <p>{identifierCount ? `${identifierCount} ${t.redactionFound}` : t.redactionNone}</p>
+              {vehicleRedaction.text && <pre>{`${t.vehicle}\n${vehicleRedaction.text}`}</pre>}
               {notes && <pre>{reviewEvidence ? `${t.intakeNote}\n${redaction.text}` : redaction.text}</pre>}
               {reviewEvidence && technicianText && <pre>{`${t.technicianNote}\n${technicianText}`}</pre>}
             </div>

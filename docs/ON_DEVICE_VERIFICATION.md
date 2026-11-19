@@ -20,6 +20,15 @@ On 2026-11-18, the owner ran the fictional seat-mark example on the second Windo
 
 An earlier local request with a different intake note also showed `ON DEVICE` and deferred service recommendations while waiting for a technician observation. The upholstery-cleaning recommendation shown in the judging video came from the separate live cloud run documented in [Verification](VERIFICATION.md#evidence-review-pilot).
 
+## Workshop seat inspection in Chrome
+
+On November 19, the operator used anonymized intake and technician notes based on a rear-seat inspection from a real workshop walkthrough. The two captures use the same intake wording.
+
+1. With the technician field blank, Gemini Nano returned **Technician evidence needed**, displayed `ON DEVICE`, and deferred service recommendations. [Initial report](../demo/evidence/workshop-seat-evidence-needed.png)
+2. With the technician's observation added, the updated `ON DEVICE` report showed the intake and technician notes separately. It recorded a surface stain, suggested a visual inspection, and asked a follow-up question. The workshop separately recorded a spot-cleaning proposal on its test booking. [Updated report](../demo/evidence/workshop-seat-evidence-updated.png)
+
+The clips show the two reports and their inference source. A timed comparison of the full quote workflow is pending.
+
 ## Prerequisites
 
 For Android, identify the actual phone model and check it against the [ML Kit supported-device documentation](https://developers.google.com/ml-kit/genai). Preview model use can require AICore developer-preview enrollment; follow the [Firebase Android guide](https://firebase.google.com/docs/ai-logic/hybrid/android/get-started) and [model configuration guide](https://firebase.google.com/docs/ai-logic/hybrid/android/configuration-options).

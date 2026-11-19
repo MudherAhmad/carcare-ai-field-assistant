@@ -12,6 +12,14 @@ Built for **Google #BuildHybridAI 2026** with Firebase AI Logic.
 
 The hosted app has verified `ON_DEVICE` results in Chrome for a general inspection brief and [the seat-mark evidence review](docs/ON_DEVICE_VERIFICATION.md#seat-mark-evidence-review-in-chrome). Native Android has a verified cloud result. See the [verification record](docs/ON_DEVICE_VERIFICATION.md) and the prepared [Devpost cover and gallery images](demo/media/README.md).
 
+## Try the evidence workflow
+
+1. Open the [public review](https://carcare-ai-field-assistant.web.app/?review=quote&lang=en) and select **Load fictional seat-mark example**. For local inference on supported desktop Chrome, select **Prepare hybrid AI** and wait for the model-ready status.
+2. Leave the technician note empty and select **Check what evidence is missing**. The report asks for a technician observation and defers service suggestions.
+3. Add `The fabric is intact. The mark is a surface stain on the passenger seat cushion, with no visible tears.` and select **Update report with evidence**. Check how the report distinguishes the intake from the technician's observation. Read the inference source displayed on each report.
+
+The [workshop walkthrough](docs/ON_DEVICE_VERIFICATION.md#workshop-seat-inspection-in-chrome) shows both stages on the same real seat case using anonymized notes.
+
 <p align="center">
   <img src="demo/evidence/android-home.png" alt="Android home screen with Firebase AI Logic ready" width="260" />
   <img src="demo/evidence/android-preview.png" alt="Android synthetic vehicle note and privacy preview" width="260" />

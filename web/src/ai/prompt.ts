@@ -1,4 +1,5 @@
 import type { VehicleInput } from "../types";
+import { redactSensitiveText } from "./redaction";
 
 const languageNames = {
   ar: "Arabic",
@@ -8,6 +9,7 @@ const languageNames = {
 
 export function buildInspectionPrompt(input: VehicleInput, redactedNotes: string): string {
   const mileage = input.mileageKm == null ? "not provided" : `${input.mileageKm} km`;
+  const vehicle = redactSensitiveText(input.vehicle, { vehicleDescription: true }).text;
   const review = input.redactedTechnicianNote;
   const caseNotes = review === undefined
     ? `Driver or technician note after local redaction:\n${redactedNotes.slice(0, 3000)}`
@@ -33,7 +35,7 @@ Hard rules:
 - Keep the response concise, practical, and fully in ${languageNames[input.language]}.
 - Return JSON only, matching schemaVersion 1.0.
 
-Vehicle: ${input.vehicle.trim() || "not provided"}
+Vehicle: ${JSON.stringify(vehicle || "not provided")}
 Mileage: ${mileage}
 ${caseNotes}`;
 }

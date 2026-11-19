@@ -29,7 +29,9 @@ const patterns: Array<{ kind: RedactionKind; expression: RegExp; replacement: st
   },
 ];
 
-export function redactSensitiveText(input: string): RedactionResult {
+const swedishRegistration = /\b[A-ZÅÄÖ]{3}[ -]?[0-9]{2}[A-Z0-9]\b/gi;
+
+export function redactSensitiveText(input: string, options?: { vehicleDescription: boolean }): RedactionResult {
   const counts: Record<RedactionKind, number> = {
     email: 0,
     phone: 0,
@@ -39,7 +41,10 @@ export function redactSensitiveText(input: string): RedactionResult {
 
   let text = input.normalize("NFKC").replace(/\u0000/g, "").trim();
   for (const pattern of patterns) {
-    text = text.replace(pattern.expression, () => {
+    const expression = options?.vehicleDescription && pattern.kind === "registration"
+      ? swedishRegistration
+      : pattern.expression;
+    text = text.replace(expression, () => {
       counts[pattern.kind] += 1;
       return pattern.replacement;
     });
